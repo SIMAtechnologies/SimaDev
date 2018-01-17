@@ -51,12 +51,12 @@ public:
 	int Simatest(int cmd, Servo articulacion[], int angulo[]);//Retornar el ángulo final
 	/*2---> Funciones de Movimiento*/
 	//Recibe los datos de la secuencia de movimiento
-	int* mover(int cmd, Servo articulacion[], int angulo[], int orden[], int movimiento[][9], int filas);
+	int* mover(int cmd, Servo articulacion[], int angulo[], int orden[], byte movimiento[][9], int filas);
 	//camina, giro, curva, saludo, balanceo - Controles basicos para desplazamiento
 	int control(int cmd, Servo articulacion[], int angulo[]);
-	int* motor(int cmd, Servo articulacion[], int angulo[], int orden[], int movimiento[][9], int filas);
+	int* motor(int cmd, Servo articulacion[], int angulo[], int orden[], byte movimiento[][9], int filas);
 	void motores(Servo articulacion[], bool activacion[]);
-	void* animation(int movimiento[][9], Servo articulacion[], int angulo[], int filas,bool mot_inicio[], bool mot_final[]);
+	void* animation(byte movimiento[][9], Servo articulacion[], int angulo[], int filas,bool mot_inicio[], bool mot_final[]);
 	//-- Battery
 	void voltajeBateria();
 private:

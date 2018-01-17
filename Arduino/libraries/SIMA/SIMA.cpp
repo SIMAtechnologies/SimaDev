@@ -90,7 +90,7 @@ int SIMA::Simatest(int cmd, Servo articulacion[], int angulo[]){
 	return angulo[cmd];
 }
 //FUNCIÓN QUE EJECUTA EL MOVIMIENTO
-int* SIMA::mover(int cmd, Servo articulacion[], int angulo[], int orden[], int movimiento[][9],int filas){
+int* SIMA::mover(int cmd, Servo articulacion[], int angulo[], int orden[], byte movimiento[][9],int filas){
 	if(cmd=='C')
 	{
 	int comparacion = 1;
@@ -132,7 +132,7 @@ void SIMA::motores(Servo articulacion[],bool activacion[]){
 		}
   }
 
-void* SIMA::animation(int movimiento[][9], Servo articulacion[], int angulo[], int filas,bool mot_inicio[], bool mot_final[]){
+void* SIMA::animation(byte movimiento[][9], Servo articulacion[], int angulo[], int filas,bool mot_inicio[], bool mot_final[]){
   /*int movimiento[x][8] = {
     //{D4, D5, D6, D7, D8, D9,D10,D11}
     //{1 , 2 , 3 , 4 , 5 , 6 , 7 ,  8}
@@ -147,7 +147,7 @@ void* SIMA::animation(int movimiento[][9], Servo articulacion[], int angulo[], i
 int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     if(cmd=='a')//M01 - Adelante
 	{
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
 			{ 90, 90, 85, 90, 90, 90, 95, 90, 15},
 			{ 80,100, 95, 85, 80, 95,100, 95, 15},
 			{ 90,105,100, 80, 90,100,105,100, 15},
@@ -161,7 +161,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
 	if(cmd=='s')//M02 - Atrás
 	{
-  	int movimiento[][9] = {
+  	byte movimiento[][9] = {
 			{ 90, 90, 85, 90, 90, 90, 95, 90, 15},
 			{ 90, 85, 80, 85, 90, 85, 90, 95, 15},
 			{100, 80, 75, 80,100, 80, 85,100, 15},
@@ -175,7 +175,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
 	if(cmd=='d')//M03 - Derecha
 	{
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
 			{ 90, 90, 85, 90, 90, 90, 95, 90, 15},
 			{ 90, 40, 40, 90, 90, 40, 40, 90, 15},
 			{ 90, 90, 85, 90, 90, 90, 95, 90, 15},
@@ -187,7 +187,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
 	if(cmd=='f')//M04 - Izquierda
 	{
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
 			{ 90, 90, 85, 90, 90, 90, 95, 90, 15},
 			{ 90, 30, 35, 90, 90,130,130, 90, 15}
 		};
@@ -196,7 +196,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
 	if(cmd=='g')//M05 - Giro Derecha
 	{
-		int movimiento[][9] = {
+		byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15},
 			{ 90, 40, 40, 90, 90, 40, 40, 90, 15}
 		};
@@ -205,7 +205,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
 	if(cmd=='h')//M06 - Giro Izquierda
 	{
-		int movimiento[][9] = {
+		byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15},
 			{ 90,140,140, 90, 90,140,140, 90, 15}
 		};
@@ -214,7 +214,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
 	if(cmd=='j')//M07 - Parar
 	{
-		int movimiento[][9] = {
+		byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15}
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -222,7 +222,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
 	if(cmd=='k')//M08 - Saludar
 	{
-		int movimiento[][9] = { 
+		byte movimiento[][9] = { 
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15},
 			{ 90, 90, 90, 90, 95, 90, 90,130, 15},
 			{ 90, 90, 90, 90, 95, 90, 90,170, 15},
@@ -235,7 +235,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
   if(cmd=='l')//M17 - Bailar
 	{
-		int movimiento[][9] = {
+		byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15},
 			{ 95, 92, 90, 90,100, 92, 95,170, 15},
 			{ 85, 88, 90, 10, 90, 88, 95, 90, 15},
@@ -252,7 +252,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
   if(cmd=='z')//M13 - baja mano izquierda
   {
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
       { 90, 90, 90,180, 90, 90, 90, 90, 15}
     };
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -260,7 +260,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   }
   if(cmd=='x')//M12 - baja mano derecha
   {
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
       { 90, 90, 90, 90, 90, 90, 90, 0, 15}
     };
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -268,7 +268,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   }
   if(cmd=='c')//M20 -
 	{
-		int movimiento[][9] = {
+		byte movimiento[][9] = {
 			{90,90,90,90,90,90,90,90, 15}
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -276,7 +276,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   }
   if(cmd=='v')//M09 - Balancear
 	{
-		int movimiento[][9] = {
+		byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15},
 			{105, 90, 90, 90,100, 90, 90, 90, 15},
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15},
@@ -288,7 +288,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
   if(cmd=='b')//M14 - celebra con una ola (subir y bajar brazos)
   {
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
 			{ 90, 90, 90, 0, 90, 90, 90, 180, 15},
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15}
     };
@@ -297,7 +297,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   }
   if(cmd=='n')//M15 - manos arriba
   {
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
       { 90, 90, 90, 0, 90, 90, 90,180, 15}
     };
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -305,7 +305,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   }
   if(cmd=='m')//M16 - manos abajo
   {
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
       { 90, 90, 90,180, 90, 90, 90, 0, 15}
     };
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -313,7 +313,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   }
   if(cmd=='o')//M11 - sube mano izquierda
   {
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
       { 90, 90, 90, 0, 90, 90, 90, 90, 15}
     };
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -321,7 +321,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   }
   if(cmd=='p')//M10 - sube mano derecha
   {
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
       { 90, 90, 90, 90, 90, 90, 90, 180, 15}
     };
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -329,7 +329,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   }
   if(cmd=='9')//M18 - Patada Izquierda
 	{
-		int movimiento[][9] = {
+		byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 60, 90, 90, 90, 15},
       { 90,  0,  0, 90, 60, 90, 90, 90, 15},
       { 90, 90, 90, 90, 60, 90, 90, 90, 15},
@@ -341,7 +341,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
   if(cmd=='0')//M19 - Patada Derecha
 	{
-    int movimiento[][9] = {
+    byte movimiento[][9] = {
 			{120, 90, 90, 90, 90, 90, 90, 90, 15},
 			{120, 90, 90, 90, 90,180,180, 90, 15},
 			{120, 90, 90, 90, 90, 90, 90, 90, 15},
@@ -353,7 +353,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 	}
   if(cmd=='D')//M21 - Sorpresa
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 90,  0, 90, 90, 90,180,  1}
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
@@ -361,7 +361,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
   if(cmd=='S')//M22 - Saludo derecho
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 30}, 
 			{ 99, 90, 90,100,102, 90, 90,100, 30}, 
 			{ 99, 90, 90,100,102, 90, 90,140, 10}, 
@@ -376,7 +376,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
   if(cmd=='F')//M23 - Saludo con la mano
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15}, 
 			{ 90, 90, 90,168, 90, 90, 90, 65, 13}, 
 			{ 90, 90, 90,168, 90, 90, 90, 75, 10}, 
@@ -389,7 +389,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
   if(cmd=='G')//M24 - Balanceo de una pierna
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 88, 90, 90, 90, 92, 90, 30}, 
 			{103, 90, 88, 90,102, 90, 90, 90, 30}, 
 			{103, 90, 88, 90, 90, 80,100, 90, 15}, 
@@ -404,7 +404,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
   if(cmd=='H')//M25 - Balanceo pie izquierdo
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 88, 90, 90, 90, 92, 90, 40}, 
 			{ 50, 90, 80, 90, 70, 87, 89, 90, 30}, 
 			{ 80, 90, 70, 90, 70, 87, 86, 90, 15}, 
@@ -419,7 +419,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
   if(cmd=='J')//M26 - Ola
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 90,160, 90, 90, 90, 20, 10}, 
 			{ 90, 90, 90,160, 90, 90, 90, 70, 10},   
 			{ 90, 90, 90, 60, 90, 90, 90,180, 10}, 
@@ -432,7 +432,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
   if(cmd=='K')//M27 - Caminata
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 88, 90, 90, 90, 92, 90, 30}, 
 			{100, 93, 86, 90,102, 90, 90, 90, 30}, 
 			{100, 95, 86, 90, 90, 80, 60, 90, 20}, 
@@ -446,7 +446,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
   if(cmd=='L')//M28 - Estiramiento derecho
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 88, 90, 90, 90, 92, 90, 20}, 
 			{ 95, 95, 86,130,130, 90, 90,130, 16}, 
 			{ 95, 95, 86,130,130, 90, 90,178, 10}, 
@@ -462,7 +462,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
   if(cmd=='Z')//M29 - Estiramiento izquierdo
     {
-        int movimiento[][9] = {
+        byte movimiento[][9] = {
 			{ 90, 90, 88, 90, 90, 90, 92, 90, 20}, 
 			{ 50, 90, 88, 60, 85, 85, 92, 60, 16}, 
 			{ 50, 90, 88, 10, 85, 85, 92, 60, 10}, 
