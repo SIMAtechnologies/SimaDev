@@ -8,6 +8,7 @@ mines= [ 0, 0, 0,  0,  0,  0,  0,  0,  0]
 #mines= [ 50, 40, 50,  0, 65, 50, 35,  0,  0]
 centro=[ 90, 90, 90, 90, 90, 90, 90, 90, 15]
 L=centro.copy()
+motores=["todo","sup","inf","pies","sPies","nada"]
 
 comandosList=[]
 startChar=bytes([253])
@@ -126,6 +127,34 @@ def modificar():
     poses.insert(ind, formatoAngulos(L))
     printAnimacion()
 
+def cargarAnim():
+    global comandosList
+    global movimientos
+    try:
+        ind=anim.curselection()[0]
+    except:
+        return
+    #cargar animacion
+    lista_poses, com, num, descpt, mot_inicio, mot_final=movimientos.leerMov(ind)
+    comandosList=lista_poses.copy()
+    inLetra.delete(0, tkinter.END)
+    inLetra.insert(0, com)
+    inCod.delete(0, tkinter.END)
+    inCod.insert(0, num)
+    inDescp.delete(0, tkinter.END)
+    inDescp.insert(0, descpt)
+    #cambiar motores
+    inMotorInicio.select_clear(inMotorInicio.curselection())
+    inMotorInicio.select_set(motores.index(mot_inicio))
+    inMotorFinal.select_clear(inMotorFinal.curselection())
+    inMotorFinal.select_set(motores.index(mot_final))
+    #cargar poses
+    poses.delete(0,tkinter.END)
+    for item in lista_poses:
+        poses.insert(tkinter.END,formatoAngulos(item))
+    #actualizar pantalla
+    printAnimacion()
+
 def reconectar():
     global direccion
     global  sima
@@ -141,7 +170,7 @@ fValores = tkinter.Frame(fVD)
 fAcciones = tkinter.Frame(ventana)
 fParametros = tkinter.Frame(ventana)
 fDisplay = tkinter.Frame(fVD)
-
+fAnimaciones= tkinter.Frame(fParametros)
 
 #Barras para in elegir angulo
 labels=["Talon I","Rodilla I", "Caderas I", "Hombro I", "Talon D","Rodilla D", "Caderas D", "Hombro D", "Delay"]
@@ -164,24 +193,39 @@ comando=tkinter.StringVar()
 comando.set("comando a insertar"+str(L))
 tkinter.Label(fDisplay, textvariable=comando).grid(row=0, column=0)
 
+#Lista de movimientos
+tkinter.Label(fAnimaciones, text="Animaciones").grid(row=0, column=0)
+scrollPoseAnim = tkinter.Scrollbar(fAnimaciones, orient=tkinter.VERTICAL, width=40)
+anim=tkinter.Listbox(fAnimaciones, selectmode=tkinter.SINGLE, exportselection=0,width=35,
+                      yscrollcommand=scrollPoseAnim.set)
+scrollPoseAnim.config(command=anim.yview)
+anim.grid(row=1, column=0)
+scrollPoseAnim.grid(row=1, column=7)
+fAnimButton=tkinter.Frame(fAnimaciones)
+tkinter.Button(fAnimButton, text="Cargar", command=cargarAnim).grid(row=0, column=0)
+#tkinter.Button(fAnimButton, text="Modificar", command=cargarPose).grid(row=0, column=1)
+fAnimButton.grid(row=2, column=0)
+fAnimaciones.grid(row=1, column=0)
+
 #Ingreso de parameros (comando y motores activados)
-tkinter.Label(fParametros, text="comando").grid(row=0, column=0)
+tkinter.Label(fParametros, text="comando").grid(row=0, column=1)
 inLetra=tkinter.Entry(fParametros)
 inLetra.bind(sequence='<KeyRelease>', func=printAnimacion)
-inLetra.grid(row=1, column=0)
+inLetra.grid(row=1, column=1)
 
 #Motor al inicio
-tkinter.Label(fParametros, text="Motor Inicio").grid(row=0, column=1)
+tkinter.Label(fParametros, text="Motor Inicio").grid(row=0, column=2)
 inMotorInicio=tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0)
 inMotorInicio.bind('<<ListboxSelect>>', printAnimacion)
-inMotorInicio.grid(row=1, column=1)
+inMotorInicio.grid(row=1, column=2)
 
 #Motor al final
-tkinter.Label(fParametros, text="Motor Final").grid(row=0, column=2)
+tkinter.Label(fParametros, text="Motor Final").grid(row=0, column=3)
 inMotorFinal=tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0)
 inMotorFinal.bind('<<ListboxSelect>>', printAnimacion)
-inMotorFinal.grid(row=1, column=2)
-for item in ["todo","sup","inf","pies","sPies","nada"]:
+inMotorFinal.grid(row=1, column=3)
+#Insertar opciones
+for item in motores:
     inMotorInicio.insert(tkinter.END, item)
     inMotorFinal.insert(tkinter.END, item)
 inMotorInicio.select_set(0)

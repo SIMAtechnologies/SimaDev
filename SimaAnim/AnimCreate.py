@@ -138,6 +138,7 @@ def cargarAnim():
     poses.delete(0,tkinter.END)
     for item in lista_poses:
         poses.insert(tkinter.END,formatoAngulos(item))
+    #actualizar pantalla
     printAnimacion()
 
 #Definicion de frames y ventana
