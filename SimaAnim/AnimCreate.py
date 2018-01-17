@@ -11,7 +11,6 @@ inicio="""  if(cmd=='{}')//M{} - {}
 
 fin="""		}};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
-    estado = true;
     animation(movimiento, articulacion, angulo, filas,'{}','{}');
     }}\n"""
 
