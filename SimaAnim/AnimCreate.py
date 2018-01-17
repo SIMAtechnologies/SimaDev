@@ -18,6 +18,7 @@ fin="""		}};
     animation(movimiento, articulacion, angulo, filas,'{}','{}');
     }}\n"""
 
+#updatetexto: Actualiza la pose a los valores de los cuadros de texto
 def updateTexto(x):
     for i in range(9):
         try:
@@ -26,6 +27,7 @@ def updateTexto(x):
         except:
             return
 
+#updateBarra: Actualiza la pose a los valores fijados en las barras
 def updateBarra(x):
     for i in range(9):
         num = int(barras[i].get())
@@ -34,12 +36,14 @@ def updateBarra(x):
         L[i] = num
     comando.set("comando a insertar"+str(L))
 
+#formatoAngulos: Retorna un string con el formato de los comandos de angulos
 def formatoAngulos(angulos):
     angText="{"
     for ang in angulos[:-1]:
         angText+= str(ang).rjust(3)+","
     return angText+str(angulos[-1]).rjust(3)+"}"
 
+#printAnimacion:actualiza la animacion de la pantalla
 def printAnimacion(x=None):
     animacion.config(state=tkinter.NORMAL)
     animacion.delete(1.0, tkinter.END)
@@ -53,21 +57,26 @@ def printAnimacion(x=None):
 
     animacion.config(state=tkinter.DISABLED)
 
+
+#agregar: agrega una pose a la animacion
 def agregar():
     comandosList.append(L.copy())
     poses.insert(tkinter.END, formatoAngulos(L))
     printAnimacion()
 
+#atras: Borra la ultima pose agregada
 def atras():
     if len(comandosList) >0:
         comandosList.pop()
         poses.delete(tkinter.END)
     printAnimacion()
 
+#centrar: regresa los valores de la pose a la posicion central
 def centrar():
     for i in range(8):
         barras[i].set(centro[i])
 
+#eliminar: Elimina la pose seleccionada de la animacion
 def eliminar():
     try:
         ind=poses.curselection()[0]
@@ -77,6 +86,7 @@ def eliminar():
     comandosList.pop(ind)
     printAnimacion()
 
+#cargarPose: carga una pose a las barras y cuadros de texto
 def cargarPose():
     global L
     global accionStr
@@ -98,6 +108,7 @@ def cargarPose():
     bModificar.config(state=tkinter.DISABLED)
     bEliminar.config(state=tkinter.DISABLED)
 
+#modificar: cambia los valores de una pose por los valores actuales
 def modificar():
     global accionStr
     global L
@@ -113,6 +124,7 @@ def modificar():
     poses.insert(ind, formatoAngulos(L))
     printAnimacion()
 
+#cargarAnim: carga una animacion desde un archivo
 def cargarAnim():
     global comandosList
     global movimientos
