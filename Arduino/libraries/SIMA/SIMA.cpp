@@ -264,16 +264,16 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
       { 90, 90, 90, 90, 90, 90, 90, 0, 15}
     };
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
-    animation(movimiento, articulacion, angulo, filas,todo,todo);
+    animation(movimiento, articulacion, angulo, filas,todo,sPies);
   }
-  if(cmd=='c')//M20 -
-	{
-		byte movimiento[][9] = {
-			{90,90,90,90,90,90,90,90, 15}
+  if(cmd=='c')//M20 - Desconexión
+    {
+        byte movimiento[][9] = {
+			{ 90, 90, 90, 90, 90, 90, 90, 90, 15}
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
-    animation(movimiento, articulacion, angulo, filas,todo,todo);
-  }
+    animation(movimiento, articulacion, angulo, filas,todo,nada);
+    }
   if(cmd=='v')//M09 - Balancear
 	{
 		byte movimiento[][9] = {
@@ -473,6 +473,15 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
     animation(movimiento, articulacion, angulo, filas,todo,todo);
+    }
+  if(cmd=='X')//M30 - Abrazo
+    {
+        byte movimiento[][9] = {
+			{ 90, 90, 90, 90, 90, 90, 90, 90, 15}, 
+			{ 90, 90, 90, 55, 90, 90, 90,125, 15}
+		};
+    filas = sizeof(movimiento)/sizeof(movimiento[0]);
+    animation(movimiento, articulacion, angulo, filas,todo,sPies);
     }
 
 }
