@@ -211,7 +211,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
     animation(movimiento, articulacion, angulo, filas,inf,sPies);
-	}*/
+	}
 	if(cmd=='j')//M07 - Parar
 	{
 		int movimiento[][9] = {
