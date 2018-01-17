@@ -63,12 +63,17 @@ void loop() {
   }*/
   addr = 0;
   val = 0;
+  bool in=false;
   while((val != 59) && (addr != EEPROM.length())){
     if(Serial.available()>0){
-      //val = Serial.read();
-      EEPROM.write(addr, val = Serial.read());
+      val = Serial.read();
+      if (in)
+      { 
+      EEPROM.write(addr, val);
       //Serial.println(String(EEPROM[addr]));
       addr++;
+      }
+      if (val==38) in=true;
     }
   }
   if((val == 59) || (addr == EEPROM.length()))
