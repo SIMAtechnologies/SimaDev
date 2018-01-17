@@ -1,5 +1,6 @@
 import tkinter
 import bluetooth
+from MoveRead import *
 
 #Variables de configuracon e inicializacion
 maxes= [180,180,180,180,180,180,180,180,255]
@@ -247,28 +248,28 @@ inMotorFinal.select_set(0)
 inMotorFinal.event_generate("<<ListboxSelect>>")
 
 #Comentarios
-tkinter.Label(fParametros, text="Codigo").grid(row=0, column=3)
+tkinter.Label(fParametros, text="Codigo").grid(row=0, column=4)
 inCod=tkinter.Entry(fParametros)
 inCod.bind(sequence='<KeyRelease>', func=printAnimacion)
-inCod.grid(row=1, column=3)
+inCod.grid(row=1, column=4)
 
-tkinter.Label(fParametros, text="Descripcion").grid(row=0, column=4)
+tkinter.Label(fParametros, text="Descripcion").grid(row=0, column=5)
 inDescp=tkinter.Entry(fParametros, width=40)
 inDescp.bind(sequence='<KeyRelease>', func=printAnimacion)
-inDescp.grid(row=1, column=4)
+inDescp.grid(row=1, column=5)
 
 #Ventana de poses
-tkinter.Label(fParametros, text="Poses").grid(row=0, column=5)
+tkinter.Label(fParametros, text="Poses").grid(row=0, column=6)
 scrollPose = tkinter.Scrollbar(fParametros, orient=tkinter.VERTICAL)
 poses=tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0,width=35,
                       yscrollcommand=scrollPose.set)
 scrollPose.config(command=poses.yview)
-poses.grid(row=1, column=5)
-scrollPose.grid(row=1, column=6)
+poses.grid(row=1, column=6)
+scrollPose.grid(row=1, column=7)
 bEliminar=tkinter.Button(fParametros, text="Eliminar", command=eliminar)
-bEliminar.grid(row=3, column=5)
+bEliminar.grid(row=3, column=6)
 bModificar=tkinter.Button(fParametros, text="Modificar", command=cargarPose)
-bModificar.grid(row=3, column=6)
+bModificar.grid(row=3, column=7)
 
 #Botones de accion
 accion=tkinter.Button(fAcciones, text="Agregar", command=agregar)
@@ -285,6 +286,15 @@ fDisplay.pack(side=tkinter.LEFT)
 fVD.pack()
 fParametros.pack()
 fAcciones.pack()
+
+#Cargar Archivo
+cargar=input("Cargar Archivo [y/n]:")
+if cargar=="y" or cargar=="Y":
+    archivo=input("Nombre del archivo:")
+    movimientos=Movimientos(archivo)
+    for mov in movimientos.listaMovi:
+        anim.insert(tkinter.END, mov[0])
+print("Cargado")
 
 ##Busqueda Bluetooth
 print("buscando dispositivos cercanos...")
