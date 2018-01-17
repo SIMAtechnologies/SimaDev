@@ -16,7 +16,8 @@
 //condiciones iniciales de las articulaciones
 int _init[8]={90,90,85,90,90,90,95,90};
 //calibracion
-int calibracion[8]={7,14,0,0,-4,8,-5,0};
+int calibracion[8]={0,0,0,0,0,0,0,0};
+//int calibracion[8]={7,14,0,0,-4,8,-5,0};
 //int _init[8]={90,60,55,90,90,120,125,90};
 byte initcomand[1][9]={{90,90,90,90,90,90,90,90,30}};
 //int initcomand[1][9]={{97,104,90,90,88,91,85,90,30}};

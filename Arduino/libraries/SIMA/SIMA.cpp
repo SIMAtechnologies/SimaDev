@@ -334,7 +334,6 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
       { 90,  0,  0, 90, 60, 90, 90, 90, 15},
       { 90, 90, 90, 90, 60, 90, 90, 90, 15},
       { 90,180,180, 90, 60, 90, 90, 90, 15}
-
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
     animation(movimiento, articulacion, angulo, filas,todo,todo);
@@ -346,7 +345,6 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
 			{120, 90, 90, 90, 90,180,180, 90, 15},
 			{120, 90, 90, 90, 90, 90, 90, 90, 15},
 			{120, 90, 90, 90, 90,  0,  0, 90, 15}
-      
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
     animation(movimiento, articulacion, angulo, filas,todo,todo);
