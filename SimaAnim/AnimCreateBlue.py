@@ -17,7 +17,7 @@ poseChar=bytes([254])
 direccion="NONE"
 inicio="""  if(cmd=='{}')//M{} - {}
     {{
-        int movimiento[][9] = {{\n"""
+        byte movimiento[][9] = {{\n"""
 
 fin="""		}};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);

@@ -7,7 +7,7 @@ comandosList=[]
 accionStr="insertar"
 inicio="""  if(cmd=='{}')//M{} - {}
     {{
-        int movimiento[][8] = {{\n"""
+        byte movimiento[][8] = {{\n"""
 
 fin="""		}};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
