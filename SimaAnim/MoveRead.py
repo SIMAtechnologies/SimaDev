@@ -38,7 +38,12 @@ class Movimientos:
             pose = [int(val) for val in pose]
             movimientos.append(pose)
             linea=f.readline()
-        return (movimientos,self.listaMovi[num][0][1:3] ,descripcion , , )
+        #Buscar motores
+        f.readline()
+        funcion=f.readline().split(',')
+        mot_inicio=funcion[4]
+        mot_final=funcion[5].rstrip('\n;)')
+        return (movimientos,self.listaMovi[num][0][1:3] ,descripcion ,mot_inicio ,mot_final )
 
     #escribirMov: escribe un movimiento en el archivo
     def escribirMov(self,Mov):
