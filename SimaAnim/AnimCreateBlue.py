@@ -168,6 +168,15 @@ def cargarAnim():
     #actualizar pantalla
     printAnimacion()
 
+#rcargarArchivo: carga la lista de animaciones de un archivo
+def recargarArchivo():
+    global archivo
+    global movimientos
+    movimientos.scan()
+    anim.delete(0, tkinter.END)
+    for mov in movimientos.listaMovi:
+        anim.insert(tkinter.END, mov[0])
+
 #reconectar: conecta el robot nuevamente
 def reconectar():
     global direccion
@@ -218,6 +227,7 @@ scrollPoseAnim.grid(row=1, column=7)
 fAnimButton=tkinter.Frame(fAnimaciones)
 tkinter.Button(fAnimButton, text="Cargar", command=cargarAnim).grid(row=0, column=0)
 #tkinter.Button(fAnimButton, text="Modificar", command=cargarPose).grid(row=0, column=1)
+tkinter.Button(fAnimButton, text="Recargar animaciones", command=recargarArchivo).grid(row=0, column=2)
 fAnimButton.grid(row=2, column=0)
 fAnimaciones.grid(row=1, column=0)
 

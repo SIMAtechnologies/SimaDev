@@ -1,3 +1,7 @@
+#Excepcion de archivo modificado
+class ArchivoModificado(Exception):
+    pass
+
 # Clase para manejar archivo con movimientos
 class Movimientos:
     # Crea un objeto Movimientos con el archivo
@@ -5,10 +9,10 @@ class Movimientos:
         assert type(archivo) == str
         self.__archivo = archivo
         self.listaMovi = []
-        self.__scan()
+        self.scan()
 
     # Scan: Busca movimientos en el archivo
-    def __scan(self):
+    def scan(self):
         try:
             f = open(self.__archivo)
             pos = 0
@@ -29,21 +33,26 @@ class Movimientos:
         f = open(self.__archivo)
         f.seek(self.listaMovi[num][1])
         header = f.readline()
-        comando=header[header.find('cmd')+6]
-        descripcion = header[header.find('-') + 2:-1]
-        f.readline()
-        f.readline()
-        linea = f.readline()
-        while '{' in linea:
-            pose = linea.strip('\t\n,{} ').split(',')
-            pose = [int(val) for val in pose]
-            movimientos.append(pose)
+        try:
+            comando=header[header.find('cmd')+6]
+            descripcion = header[header.find('-') + 2:-1]
+            f.readline()
+            f.readline()
             linea = f.readline()
-        # Buscar motores
-        f.readline()
-        funcion = f.readline().split(',')
-        mot_inicio = funcion[4]
-        mot_final = funcion[5].rstrip('\n;)')
+            while '{' in linea:
+                pose = linea.strip('\t\n,{} ').split(',')
+                pose = [int(val) for val in pose]
+                movimientos.append(pose)
+                linea = f.readline()
+            # Buscar motores
+            f.readline()
+            funcion = f.readline().split(',')
+            mot_inicio = funcion[4]
+            mot_final = funcion[5].rstrip('\n;)')
+        except (IndexError, ValueError):
+            f.close()
+            raise ArchivoModificado("El archivo original ha sido modificado o no tiene el formato correcto")
+        f.close()
         return movimientos, comando, self.listaMovi[num][0][1:3], descripcion, mot_inicio, mot_final
 
         # escribirMov: escribe un movimiento en el archivo
