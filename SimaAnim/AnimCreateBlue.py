@@ -3,10 +3,10 @@ import bluetooth
 from MoveRead import *
 
 #Variables de configuracon e inicializacion
-maxes= [180,180,180,180,180,180,180,180,255]
-mines= [ 0, 0, 0,  0,  0,  0,  0,  0,  0]
-#maxes= [115,130,145,180,130,140,130,180,255]
-#mines= [ 50, 40, 50,  0, 65, 50, 35,  0,  0]
+#maxes= [180,180,180,180,180,180,180,180,255]
+#mines= [ 0, 0, 0,  0,  0,  0,  0,  0,  0]
+maxes= [115,130,145,180,130,140,130,180,255]
+mines= [ 50, 40, 50,  0, 65, 50, 35,  0,  0]
 centro=[ 90, 90, 90, 90, 90, 90, 90, 90, 15]
 L=centro.copy()
 motores=["todo","sup","inf","pies","sPies","nada"]
