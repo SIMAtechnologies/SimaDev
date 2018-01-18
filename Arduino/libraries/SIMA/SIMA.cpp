@@ -478,7 +478,7 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     {
         byte movimiento[][9] = {
 			{ 90, 90, 90, 90, 90, 90, 90, 90, 15}, 
-			{ 90, 90, 90, 55, 90, 90, 90,125, 15}
+			{ 90, 90, 90, 55, 90, 90, 90,125, 20}
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
     animation(movimiento, articulacion, angulo, filas,todo,sPies);
