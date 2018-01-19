@@ -1,6 +1,7 @@
 import tkinter
 import bluetooth
 from MoveRead import *
+from time import sleep
 
 #Variables de configuracon e inicializacion
 #maxes= [180,180,180,180,180,180,180,180,250]
@@ -80,11 +81,11 @@ def atras():
 
 #enviar: Envia la animacion al robot conectado
 def enviar():
-    datos=startChar
+    sima.send(startChar)
     for angulos in comandosList:
-        datos+=bytes(angulos)+poseChar
-    datos +=endChar
-    sima.send(datos)
+        sima.send(bytes(angulos)+poseChar)
+        sleep(0.06)
+    sima.send(endChar)
 
 #centrar: regresa los valores de la pose a la posicion central
 def centrar():
@@ -185,6 +186,7 @@ def reconectar():
         sima.close()
         sima = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
         sima.connect((direccion, 1))
+        sima.settimeout(1.0)
 
 #Definicion de frames y ventana
 ventana = tkinter.Tk()
