@@ -263,6 +263,7 @@ accion=tkinter.Button(fAcciones, text="Agregar", command=agregar)
 accion.grid(row=0, column=0)
 bAtras=tkinter.Button(fAcciones, text="Atrás", command=atras)
 bAtras.grid(row=0, column=1)
+tkinter.Button(fAcciones, text="centrar", command=centrar).grid(row=0, column=2)
 
 #Definicion de geometria
 fValores.pack(side=tkinter.LEFT)

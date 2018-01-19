@@ -286,8 +286,8 @@ accion=tkinter.Button(fAcciones, text="Agregar", command=agregar)
 accion.grid(row=0, column=0)
 bAtras=tkinter.Button(fAcciones, text="Atrás", command=atras)
 bAtras.grid(row=0, column=1)
-tkinter.Button(fAcciones, text="Enviar", command=enviar).grid(row=0, column=2)
-tkinter.Button(fAcciones, text="centrar", command=centrar).grid(row=0, column=3)
+tkinter.Button(fAcciones, text="centrar", command=centrar).grid(row=0, column=2)
+tkinter.Button(fAcciones, text="Enviar", command=enviar).grid(row=0, column=3)
 tkinter.Button(fAcciones, text="Reconectar", command=reconectar).grid(row=0, column=4)
 
 #Definicion de geometria
