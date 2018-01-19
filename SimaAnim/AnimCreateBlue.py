@@ -323,4 +323,6 @@ print(direccion)
 sima=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 sima.connect((direccion,1))
 sima.settimeout(1.0)
+print("Conectado")
+
 ventana.mainloop()

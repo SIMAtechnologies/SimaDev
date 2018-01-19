@@ -279,4 +279,5 @@ if cargar=="y" or cargar=="Y":
     movimientos=Movimientos(archivo)
     for mov in movimientos.listaMovi:
         anim.insert(tkinter.END, mov[0])
+
 ventana.mainloop()
