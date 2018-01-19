@@ -87,7 +87,7 @@ void loop() {
        sima.control(comando, articulacion, ang);
       //LECTURA DE BATERÍA
       //sima.voltajeBateria();
-      Serial.println("OK");
+      Serial.println("k");
       //Serial.println(String(ang[0])+"\t"+String(ang[1])+"\t"+String(ang[2])+"\t"+String(ang[3])+"\t"+String(ang[4])+"\t"+String(ang[5])+"\t"+String(ang[6])+"\t"+String(ang[7]));
     }
   }
