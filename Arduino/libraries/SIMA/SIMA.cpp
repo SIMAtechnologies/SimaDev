@@ -289,8 +289,8 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
   if(cmd=='b')//M14 - celebra con una ola (subir y bajar brazos)
   {
     byte movimiento[][9] = {
-			{ 90, 90, 90, 0, 90, 90, 90, 180, 15},
-			{ 90, 90, 90, 90, 90, 90, 90, 90, 15}
+			{ 90, 90, 90,  0, 90, 90, 90,180, 10}, 
+			{ 90, 90, 90, 90, 90, 90, 90, 90, 10}
     };
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
     animation(movimiento, articulacion, angulo, filas,todo,sPies);
@@ -328,28 +328,31 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     animation(movimiento, articulacion, angulo, filas,sup,sPies);
   }
   if(cmd=='9')//M18 - Patada Izquierda
-	{
-		byte movimiento[][9] = {
-			{ 90, 90, 90, 90, 60, 90, 90, 90, 15},
-      { 90,  0,  0, 90, 60, 90, 90, 90, 15},
-      { 90, 90, 90, 90, 60, 90, 90, 90, 15},
-      { 90,180,180, 90, 60, 90, 90, 90, 15}
+    {
+        byte movimiento[][9] = {
+			{ 65, 90, 90, 90, 73, 90, 90, 90, 15}, 
+			{ 90, 40, 50, 90, 73, 90, 90, 90, 10}, 
+			{ 90, 90, 90, 90, 73, 90, 90, 90,  2}, 
+			{ 90,130,145, 90, 73, 90, 90, 90,  2}, 
+			{ 90,130,110, 90, 73, 90, 90, 90,  2}, 
+			{ 90, 90, 90, 90, 90, 90, 90, 90,  2}
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
     animation(movimiento, articulacion, angulo, filas,todo,todo);
-	}
+    }
   if(cmd=='0')//M19 - Patada Derecha
-	{
-    byte movimiento[][9] = {
-			{{105, 90, 90, 90,110, 90, 90, 90, 50}, 
-			{105, 90, 90, 90, 90,140,130, 90,  7}, 
+    {
+        byte movimiento[][9] = {
+			{105, 90, 90, 90,110, 90, 90, 90, 15}, 
+			{105, 90, 90, 90, 90,140,130, 90, 10}, 
 			{105, 90, 90, 90, 90, 90, 90, 90,  2}, 
 			{105, 90, 90, 90, 90, 50, 35, 90,  2}, 
-			{ 90, 90, 90, 90, 90, 90, 90, 90,  5}
+			{105, 90, 90, 90, 90, 50, 70, 90,  2}, 
+			{ 90, 90, 90, 90, 90, 90, 90, 90,  2}
 		};
     filas = sizeof(movimiento)/sizeof(movimiento[0]);
     animation(movimiento, articulacion, angulo, filas,todo,todo);
-	}
+    }
   if(cmd=='D')//M21 - Sorpresa
     {
         byte movimiento[][9] = {
