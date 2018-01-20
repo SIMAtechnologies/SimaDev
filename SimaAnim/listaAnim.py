@@ -1,5 +1,5 @@
 from MoveRead import *
-mov=Movimientos("holoa.txt")
+mov=Movimientos("movimientos.txt")
 l=len(mov.listaMovi)
 for i in range(l):
     s=mov.leerMov(i)
