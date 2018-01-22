@@ -16,8 +16,8 @@
 //condiciones iniciales de las articulaciones
 int _init[8]={90,90,85,90,90,90,95,90};
 //calibracion
-//int calibracion[8]={0,0,0,0,0,0,0,0};
-int calibracion[8]={7,14,0,0,-4,8,-5,0};
+int calibracion[8]={0,0,0,0,0,0,0,0};
+//int calibracion[8]={7,14,0,0,-4,8,-5,0};
 
 //Posicion inicial
 byte initcomand[1][9]={{90,90,90,90,90,90,90,90,30}};
@@ -42,7 +42,7 @@ void setup()
   for (int i = 0;i < 8; i++)
   {
     ang[i]=_init[i];
-    articulacion[i].attach(4+i,minP[i],maxP[i]);//, 800, 2200);
+    articulacion[i].attach(4+i);//, 800, 2200);
     //articulacion[i].write(_init[i]);
   }
   //Mover a posicion inicil
