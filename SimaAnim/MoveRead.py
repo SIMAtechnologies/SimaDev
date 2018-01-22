@@ -61,13 +61,71 @@ class Movimientos:
     # escribirMov: escribe un movimiento en el archivo
     #formato como (movimientos,comando,codigo, descripcion, mot_inicio,_mot_final)
     def escribirMov(self, mov):
-        assert len(mov)==5
+        assert len(mov)==6
         #buscar posicon para escribir
         i=0
-        while mov[2]<:
+        pos=self.listaMovi[0][1]
+        final=False
+        while mov[2]>=int(self.listaMovi[i][0][1:3]) :
+            try:
+                pos=self.listaMovi[i][1]
+                i=i+1
+            except:
+                pos=self.__buscarFin(i-1)
+                final=True
+                break
+        if not final:
+            nextPos=self.listaMovi[i+1][1]
+        else:
+            nextPos=pos
+        #copiar anterior
+        with tempfile.NamedTemporaryFile(dir='.', delete=False) as tmp, \
+                open(self.__archivo, 'rb') as f:
+            while f.tell() <pos:
+                tmp.write(f.readline())
+            tmp.write(self.__textoAnimacion(mov*)
 
-        tmp=tempfile.NamedTemporaryFile(dir=".", delete=False)
-        f=open(self.__archivo)
 
-        os.replace(tmp.name,self.__archivo)
+
+        #os.replace(tmp.name,self.__archivo)
         return
+
+    #BuscarFin:busca la ultima linea de un movimientos
+    def __buscarFin(self,mov):
+        f=open(self.__archivo)
+        f.seek(self.listaMovi[num][1])
+        f.readline()
+        f.readline()
+        f.readline()
+        linea=f.readline()
+        while '{' in linea:
+            linea=f.readline()
+        f.readline()
+        f.readline()
+        f.readline()
+        pos=f.tell()
+        f.close()
+        return pos
+
+    # formatoAngulos: Retorna un string con el formato de los comandos de angulos
+    def __formatoAngulos(self,angulos):
+        angText = "{"
+        for ang in angulos[:-1]:
+            angText += str(ang).rjust(3) + ","
+        return angText + str(angulos[-1]).rjust(3) + "}"
+
+    # printAnimacion:actualiza la animacion de la pantalla
+    def __textoAnimacion(self, movimientos, letra, cod, descp,mot_inicio,mot_final):
+        texto=""
+        texto+="""  if(cmd=='{}')//M{} - {}
+    {{
+        byte movimiento[][9] = {{\n""".format(letra,cod,descp)
+        if len(movimientos) > 0:
+            for angulos in movimientos[:-1]:
+                texto+="\t\t\t" + self.__formatoAngulos(angulos) + ", \n"
+            texto+="\t\t\t" + self.__formatoAngulos(movimientos[-1]) + "\n"
+        texto += """		}};
+    filas = sizeof(movimiento)/sizeof(movimiento[0]);
+    animation(movimiento, articulacion, angulo, filas,{},{});
+    }}\n""".format(mot_inicio, mot_final)
+        return texto
