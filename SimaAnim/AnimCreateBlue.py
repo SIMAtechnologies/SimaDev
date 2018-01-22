@@ -193,11 +193,14 @@ def reconectar():
 def cargarArchivo():
     global archivo
     global movimientos
-    archivo=tkinter.filedialog.askopenfilename(initialdir = "/" ,title = "Seleccionar archivo de movimientos",filetypes=(("Libreria", "*.cpp"), ("Todos los archivos", "*.*")))
-    movimientos=Movimientos(archivo)
-    anim.delete(0, tkinter.END)
-    for mov in movimientos.listaMovi:
-        anim.insert(tkinter.END, mov[0])
+    file = tkinter.filedialog.askopenfilename(initialdir="/", title="Seleccionar archivo de movimientos",
+                                              filetypes=(("Libreria", "*.cpp"), ("Todos los archivos", "*.*")))
+    if file != '':
+        archivo = file
+        movimientos = Movimientos(archivo)
+        anim.delete(0, tkinter.END)
+        for mov in movimientos.listaMovi:
+            anim.insert(tkinter.END, mov[0])
 
 #Definicion de frames y ventana
 ventana = tkinter.Tk()

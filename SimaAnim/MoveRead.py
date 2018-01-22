@@ -55,7 +55,6 @@ class Movimientos:
         f.close()
         return movimientos, comando, self.listaMovi[num][0][1:3], descripcion, mot_inicio, mot_final
 
-        # escribirMov: escribe un movimiento en el archivo
-
+    # escribirMov: escribe un movimiento en el archivo
     def escribirMov(self, Mov):
         return
