@@ -331,3 +331,4 @@ sima.settimeout(1.0)
 print("Conectado")
 
 ventana.mainloop()
+sima.close()

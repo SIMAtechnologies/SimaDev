@@ -287,5 +287,4 @@ fVD.pack()
 fParametros.pack()
 fAcciones.pack()
 
-
 ventana.mainloop()
