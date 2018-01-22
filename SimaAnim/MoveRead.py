@@ -1,3 +1,5 @@
+import tempfile
+import os
 #Excepcion de archivo modificado
 class ArchivoModificado(Exception):
     pass
@@ -27,6 +29,7 @@ class Movimientos:
         return
 
     # leerMov: Lee un movimiento del archivo
+    #num corresponde al indice en al lista de movimientos
     def leerMov(self, num):
         assert type(num) == int
         movimientos = []
@@ -56,5 +59,15 @@ class Movimientos:
         return movimientos, comando, self.listaMovi[num][0][1:3], descripcion, mot_inicio, mot_final
 
     # escribirMov: escribe un movimiento en el archivo
-    def escribirMov(self, Mov):
+    #formato como (movimientos,comando,codigo, descripcion, mot_inicio,_mot_final)
+    def escribirMov(self, mov):
+        assert len(mov)==5
+        #buscar posicon para escribir
+        i=0
+        while mov[2]<:
+
+        tmp=tempfile.NamedTemporaryFile(dir=".", delete=False)
+        f=open(self.__archivo)
+
+        os.replace(tmp.name,self.__archivo)
         return
