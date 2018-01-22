@@ -3,7 +3,7 @@
     Enero2017
  *DISTRIBUCIÓN DE VARIABLES EN EL CUERPO
  *               CABEZA 
- *       LL4-D5  -HOMBR OS  - D9-D4
+ *       L4-D5  -HOMBROS  - D9-D4
  *       L3-D4  -CADERAS  - D8 -D3
  *       L2-D3  -RODILLAS - D7 -D2
  *       L1-D2  -TALONES  - D6 -D1
