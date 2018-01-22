@@ -2,6 +2,7 @@ import tkinter
 import bluetooth
 from MoveRead import *
 from time import sleep
+from tkinter import filedialog
 
 #Variables de configuracon e inicializacion
 #maxes= [180,180,180,180,180,180,180,180,250]
@@ -188,6 +189,16 @@ def reconectar():
         sima.connect((direccion, 1))
         sima.settimeout(1.0)
 
+#Cuadro de dialogo para abrir archivo
+def cargarArchivo():
+    global archivo
+    global movimientos
+    archivo=tkinter.filedialog.askopenfilename(initialdir = "/" ,title = "Seleccionar archivo de movimientos",filetypes=(("Libreria", "*.cpp"), ("Todos los archivos", "*.*")))
+    movimientos=Movimientos(archivo)
+    anim.delete(0, tkinter.END)
+    for mov in movimientos.listaMovi:
+        anim.insert(tkinter.END, mov[0])
+
 #Definicion de frames y ventana
 ventana = tkinter.Tk()
 fVD=tkinter.Frame(ventana)
@@ -228,7 +239,7 @@ anim.grid(row=1, column=0)
 scrollPoseAnim.grid(row=1, column=7)
 fAnimButton=tkinter.Frame(fAnimaciones)
 tkinter.Button(fAnimButton, text="Cargar", command=cargarAnim).grid(row=0, column=0)
-#tkinter.Button(fAnimButton, text="Modificar", command=cargarPose).grid(row=0, column=1)
+tkinter.Button(fAnimButton, text="Abrir Archivo", command=cargarArchivo).grid(row=0, column=1)
 tkinter.Button(fAnimButton, text="Recargar animaciones", command=recargarArchivo).grid(row=0, column=2)
 fAnimButton.grid(row=2, column=0)
 fAnimaciones.grid(row=1, column=0)
@@ -298,15 +309,6 @@ fDisplay.pack(side=tkinter.LEFT)
 fVD.pack()
 fParametros.pack()
 fAcciones.pack()
-
-#Cargar Archivo
-cargar=input("Cargar Archivo [y/n]:")
-if cargar=="y" or cargar=="Y":
-    archivo=input("Nombre del archivo:")
-    movimientos=Movimientos(archivo)
-    for mov in movimientos.listaMovi:
-        anim.insert(tkinter.END, mov[0])
-print("Cargado")
 
 ##Busqueda Bluetooth
 print("buscando dispositivos cercanos...")
