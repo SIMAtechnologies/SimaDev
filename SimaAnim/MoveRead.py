@@ -16,6 +16,7 @@ class Movimientos:
     # Scan: Busca movimientos en el archivo
     def scan(self):
         try:
+            self.listaMovi=[]
             f = open(self.__archivo)
             pos = 0
             for line in f:
@@ -93,7 +94,6 @@ class Movimientos:
             f.seek(nextPos)
             tmp.write(f.read())
         os.replace(tmp.name,self.__archivo)
-
         return
 
     #BuscarFin:busca la ultima linea de un movimientos
