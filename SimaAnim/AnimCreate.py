@@ -175,7 +175,22 @@ def cargarArchivo():
         anim.delete(0, tkinter.END)
         for mov in movimientos.listaMovi:
             anim.insert(tkinter.END, mov[0])
+        botGuardar.config(state=tkinter.NORMAL)
+        botCargar.config(state=tkinter.NORMAL)
+        botRecargar.config(state=tkinter.NORMAL)
 
+#guardarArchivo: guarda el movimiento en el archivo abiert
+def guardarArchivo():
+    global archivo
+    global movimientos
+    if archivo!="":
+        com=inLetra.get()
+        cod=int(inCod.get())
+        descp=inDescp.get()
+        mot_inicio=inMotorInicio.get(inMotorInicio.curselection())
+        mot_final = inMotorFinal.get(inMotorFinal.curselection())
+        movimientos.escribirMov((comandosList,com,cod,descp,mot_inicio,mot_final))
+        recargarArchivo()
 
 #Definicion de frames y ventana
 ventana = tkinter.Tk()
@@ -216,9 +231,16 @@ scrollPoseAnim.config(command=anim.yview)
 anim.grid(row=1, column=0)
 scrollPoseAnim.grid(row=1, column=7)
 fAnimButton=tkinter.Frame(fAnimaciones)
-tkinter.Button(fAnimButton, text="Cargar", command=cargarAnim).grid(row=0, column=0)
+botCargar=tkinter.Button(fAnimButton, text="Cargar", command=cargarAnim)
+botCargar.config(state=tkinter.DISABLED)
+botCargar.grid(row=0, column=0)
 tkinter.Button(fAnimButton, text="Abrir Archivo", command=cargarArchivo).grid(row=0, column=1)
-tkinter.Button(fAnimButton, text="Recargar animaciones", command=recargarArchivo).grid(row=0, column=2)
+botRecargar=tkinter.Button(fAnimButton, text="Recargar animaciones", command=recargarArchivo)
+botRecargar.grid(row=0, column=2)
+botRecargar.config(state=tkinter.DISABLED)
+botGuardar=tkinter.Button(fAnimButton, text="Guardar", command=guardarArchivo)
+botGuardar.config(state=tkinter.DISABLED)
+botGuardar.grid(row=0, column=3)
 fAnimButton.grid(row=2, column=0)
 fAnimaciones.grid(row=1, column=0)
 
