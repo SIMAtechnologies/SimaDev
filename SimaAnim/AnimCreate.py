@@ -48,7 +48,7 @@ def formatoAngulos(angulos):
 def printAnimacion(x=None):
     animacion.config(state=tkinter.NORMAL)
     animacion.delete(1.0, tkinter.END)
-    animacion.insert(tkinter.END,inicio.format(inLetra.get(),inCod.get(),inDescp.get()))
+    animacion.insert(tkinter.END,inicio.format(inLetra.get(),inCod.get().rjust(2,'0'),inDescp.get()))
     if len(comandosList) > 0:
         for angulos in comandosList[:-1]:
             animacion.insert(tkinter.END, "\t\t\t" + formatoAngulos(angulos) + ", \n")
