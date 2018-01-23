@@ -7,12 +7,14 @@
  *       L1-D2  -TALONES  - D6 -D1
  */
 
+
+#include <SIMA.h>
+#include <EEPROM.h>
+ //Caracteres de mensaje
  byte in=253;
  byte poseEnd = 254;
  byte messEnd = 255;
  
-#include <SIMA.h>
-#include <EEPROM.h>
 //condiciones iniciales de las articulaciones
 int _init[8]={90,90,85,90,90,90,95,90};
 //calibracion
