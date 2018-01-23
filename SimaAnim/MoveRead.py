@@ -15,6 +15,7 @@ class Movimientos:
     def scan(self):
         try:
             f = open(self.__archivo)
+            self.listaMovi=[]
             pos = 0
             for line in f:
                 ind = line.find("')//M")
