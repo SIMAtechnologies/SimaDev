@@ -7,9 +7,9 @@
  *       L1-D2  -TALONES  - D6 -D1
  */
 
- //var in=253
- //var etapa anim = 254
- //var end = 255
+ byte in=253;
+ byte poseEnd = 254;
+ byte messEnd = 255;
  
 #include <SIMA.h>
 #include <EEPROM.h>
@@ -65,7 +65,7 @@ void loop() {
   val = 0;
   bool in=false;
   //Lee todos los caracteres hasta que termina el mensaje
-  while((val != 255) && (addr != EEPROM.length())){
+  while((val != messEnd) && (addr != EEPROM.length())){
     if(Serial.available()>0){
       val = Serial.read();
       Serial.println(val);
@@ -75,7 +75,7 @@ void loop() {
         addr++;
       }
       //Inicio del mensaje
-      if (val==253) in=true;
+      if (val==in) in=true;
       
       
       //Serial.println(String(EEPROM[addr]));
@@ -83,7 +83,7 @@ void loop() {
     }
   }
   //Ejecutar los comandos
-  if(val == 255) 
+  if(val == messEnd) 
   {
     //Serial.print("len::");
     //Serial.println(String(addr-1));
@@ -97,7 +97,7 @@ void loop() {
         //Serial.println(k);
         //Serial.println(int(comando[0][i]));
       }
-      if (int(EEPROM[10*k+9])!=int(254)) break;
+      if (int(EEPROM[10*k+9])!=int(poseEnd)) break;
       k++;
       sima.animation(comando, articulacion, ang, 1,  all, all );
     }
