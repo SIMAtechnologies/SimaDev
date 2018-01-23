@@ -11,10 +11,11 @@
 #include <SIMA.h>
 #include <EEPROM.h>
  //Caracteres de mensaje
- byte in=253;
+ byte messIn=253;
  byte poseEnd = 254;
  byte messEnd = 255;
- 
+ //Almacenamiento de movimiento
+ byte comando[110][9];
 //condiciones iniciales de las articulaciones
 int _init[8]={90,90,85,90,90,90,95,90};
 //calibracion
@@ -30,8 +31,8 @@ int ang[8];
 Servo articulacion[8];
 SIMA sima(calibracion);
 int addr = 0;
-int val;
-byte comando[1][9];
+byte val;
+
 String palabra;
 //Definicion de motores activos
 bool all[8]={1,1,1,1,1,1,1,1};
@@ -77,7 +78,7 @@ void loop() {
         addr++;
       }
       //Inicio del mensaje
-      if (val==in) in=true;
+      if (val==messIn) in=true;
       
       
       //Serial.println(String(EEPROM[addr]));
@@ -87,21 +88,22 @@ void loop() {
   //Ejecutar los comandos
   if(val == messEnd) 
   {
-    //Serial.print("len::");
-    //Serial.println(String(addr-1));
+    Serial.print("len::");
+    Serial.println(String(addr-1));
     int k=0; 
     while((10*k)<(addr-1))
     {
       for(int i=0; i<9; i++){
-        comando[0][i] = byte(EEPROM[10*k+i]);
+        comando[k][i] = byte(EEPROM[10*k+i]);
         //MODO MANUAL
-        //Serial.print("k:");
-        //Serial.println(k);
-        //Serial.println(int(comando[0][i]));
+        Serial.print("k:");
+        Serial.println(k);
+        Serial.println(int(comando[0][i]));
       }
       if (int(EEPROM[10*k+9])!=int(poseEnd)) break;
       k++;
-      sima.animation(comando, articulacion, ang, 1,  all, all );
+      Serial.println(k);
     }
+    sima.animation(comando, articulacion, ang, k,  all, all );
   }
 }
