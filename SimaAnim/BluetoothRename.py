@@ -14,6 +14,7 @@ def blueSelect(x):
 
 #blueSearch: Busca dispositivos bluetooth
 def blueSearch():
+    ventana.response.set("")
     nearby_devices = bluetooth.discover_devices(lookup_names=True, flush_cache=True, duration=4)
     ventana.blueDev=[]
     bluetothList.delete(0, tkinter.END)
