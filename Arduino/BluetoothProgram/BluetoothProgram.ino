@@ -1,5 +1,6 @@
 #include <SoftwareSerial.h>
 SoftwareSerial BT1(3,4); // RX, TX recordar que se cruzan
+//Conectar pin 3 a P1 y pin 4 a P2
 
 void setup() {
   // put your setup code here, to run once:

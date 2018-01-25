@@ -3,6 +3,9 @@ import bluetooth
 import serial
 import serial.tools.list_ports
 from time import sleep
+import time
+
+#Conectar pin 3 a P1 y pin 4 a P2
 
 #FUNCIONES
 
@@ -22,6 +25,7 @@ def blueSearch():
         ventana.blueDev.append(addr)
         bluetothList.insert(tkinter.END,"%s - %s" % (addr, name))
 
+#conectOk: verifica si la conexion esta correcta
 def conectOk(modulo):
     ventana.serial.write(b'AT'+ventana.mod[modulo])
     sleep(0.6)
@@ -40,8 +44,10 @@ def rename():
     name=bytes(ventanaNombre.get("1.0",'end-1c'),"utf8")
     print(b'AT+NAME'+name+ventana.mod[modulo])
     ventana.serial.write(b'AT+NAME'+name+ventana.mod[modulo])
-    sleep(2)
-    respuesta=ventana.serial.read(ventana.serial.inWaiting())
+    tic = time.time()
+    respuesta=b''
+    while (time.time()-tic)<2 and not b'\n' in respuesta:
+        respuesta+=ventana.serial.read(ventana.serial.inWaiting())
     ventana.response.set(respuesta)
     ventana.serial.flushInput()
     return
