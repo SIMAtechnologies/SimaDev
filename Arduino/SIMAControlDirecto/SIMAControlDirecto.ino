@@ -81,19 +81,19 @@ void loop() {
       if (in) 
       {
        addr++;
-       if (i<9) {
+       if (i<9) {//guardar angulos
         comando[k][i]=val;
         i++;
        }
-       else if (val==poseEnd) 
+       else if (val==poseEnd) //Fin de pose
        {
-        Serial.print("buff: ");
-        Serial.println(Serial.available());
-        Serial.println(comando[k][8]);
+        //Serial.print("buff: ");
+        //Serial.println(Serial.available());
+        //Serial.println(comando[k][8]);
         k++;
         i=0;
        }
-       else 
+       else //mensaje incorecto
        {
         correcto =false;
         break;
@@ -107,9 +107,10 @@ void loop() {
   //Ejecutar los comandos
   if(val == messEnd && correcto) 
   {
-    Serial.print("len::");
-    Serial.println(String(addr-1));
+    //Serial.print("len::");
+    //Serial.println(String(addr-1));
     sima.animation(comando, articulacion, ang, k,  all, all );
+    Serial.println("k");
   }
 }
 
