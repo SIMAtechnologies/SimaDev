@@ -38,7 +38,24 @@ byte val;
 
 String palabra;
 //Definicion de motores activos
-bool all[8]={1,1,1,1,1,1,1,1};
+/*Estado de motores:
+nada[0]: ningun motores
+pies[1]: solo los pies
+sup[2]:solo brazos
+inf[3]: solo solo piernas
+sPies[4]: solo piernas sin los pies
+sPiesBrazos[5]: todo los motores excepto los pies
+todo[6]: todos los motores
+*/ 
+bool estadoMotores[7][8]= {
+ {0,0,0,0,0,0,0,0},
+ {1,0,0,0,1,0,0,0},
+ {0,0,0,1,0,0,0,1},
+ {1,1,1,0,1,1,1,0},
+ {0,1,1,0,0,1,1,0},
+ {0,1,1,1,0,1,1,1},
+ {1,1,1,1,1,1,1,1}
+};
 void setup()
 {
   //Inicio del puerto Serial
@@ -52,7 +69,7 @@ void setup()
     //articulacion[i].write(_init[i]);
   }
   //Mover a posicion inicil
-  sima.animation(initcomand, articulacion, ang, 1,  all, all );
+  sima.animation(initcomand, articulacion, ang, 1,  estadoMotores[6], estadoMotores[4] );
 
   //limpiar buffer serial
   while(Serial.available() > 0){
@@ -69,6 +86,8 @@ void setup()
 void loop() {
   addr = 0;
   val = 0;
+  int mot_inicio=6;
+  int mot_final=6;
   int i=0;
   int k=0;
   bool in=false;
@@ -101,17 +120,26 @@ void loop() {
       }
       //Inicio del mensaje
       if (val==messIn) in=true;
-      
     }
   }
-  //Ejecutar los comandos
-  if(val == messEnd && correcto) 
+  //Recibir estado de motores
+  if(val==messEnd)
   {
-    //Serial.print("len::");
-    //Serial.println(String(addr-1));
-    sima.animation(comando, articulacion, ang, k,  all, all );
-    Serial.println("k");
+    if(i==3)
+    {
+      mot_inicio=comando[k][0];
+      mot_final=comando[k][1];
+    }
+    //Ejecutar los comandos
+    if(correcto) 
+    {
+      //Serial.print("len::");
+      //Serial.println(String(addr-1));
+      sima.animation(comando, articulacion, ang, k,  estadoMotores[mot_inicio], estadoMotores[mot_final] );
+      Serial.println("k");
+    }
   }
+  
 }
 
 
