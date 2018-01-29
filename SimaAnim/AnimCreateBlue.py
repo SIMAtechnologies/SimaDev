@@ -1,7 +1,6 @@
 import tkinter
 import bluetooth
 from MoveRead import *
-from time import sleep
 from tkinter import filedialog
 
 #Variables de configuracon e inicializacion
@@ -85,7 +84,6 @@ def enviar():
     sima.send(startChar)
     for angulos in comandosList:
         sima.send(bytes(angulos)+poseChar)
-        sleep(0.06)
     sima.send(endChar)
 
 #centrar: regresa los valores de la pose a la posicion central
