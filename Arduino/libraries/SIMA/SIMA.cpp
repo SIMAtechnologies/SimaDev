@@ -13,6 +13,15 @@
   #include "WProgram.h"
 #endif
 int filas;
+/*Estado de motores:
+sup:solo brazos
+inf: solo solo piernas
+pies: solo los pies
+sPies: solo piernas sin los pies
+sPiesBrazos: todo los motores excepto los pies
+todo: todos los motores
+nada: ningun motores
+*/ 
 bool sup[8]={0,0,0,1,0,0,0,1};
 bool inf[8] = {1,1,1,0,1,1,1,0};
 bool pies[8]={1,0,0,0,1,0,0,0};
