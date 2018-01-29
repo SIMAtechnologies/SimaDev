@@ -130,6 +130,7 @@ void loop() {
       mot_inicio=comando[k][0];
       mot_final=comando[k][1];
     }
+    else correcto=false;
     //Ejecutar los comandos
     if(correcto) 
     {
