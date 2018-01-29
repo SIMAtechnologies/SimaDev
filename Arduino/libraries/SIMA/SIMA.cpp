@@ -22,13 +22,13 @@ sPiesBrazos: todo los motores excepto los pies
 todo: todos los motores
 nada: ningun motores
 */ 
+bool nada[8]={0,0,0,0,0,0,0,0};
+bool pies[8]={1,0,0,0,1,0,0,0};
 bool sup[8]={0,0,0,1,0,0,0,1};
 bool inf[8] = {1,1,1,0,1,1,1,0};
-bool pies[8]={1,0,0,0,1,0,0,0};
 bool sPies[8]={0,1,1,0,0,1,1,0};
 bool sPiesBrazos[8]={0,1,1,1,0,1,1,1};
 bool todo[8]={1,1,1,1,1,1,1,1};
-bool nada[8]={0,0,0,0,0,0,0,0};
 //int offset[8]={7,14,0,0,-2,8,-5,0};
 
 SIMA::SIMA(int calibracion[8]){
