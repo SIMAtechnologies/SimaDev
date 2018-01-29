@@ -14,13 +14,16 @@
  byte messIn=253;
  byte poseEnd = 254;
  byte messEnd = 255;
+ //Bufer serial
+ byte buff[10];
  //Almacenamiento de movimiento
  byte comando[110][9];
 //condiciones iniciales de las articulaciones
 int _init[8]={90,90,85,90,90,90,95,90};
 //calibracion
-int calibracion[8]={0,0,0,0,0,0,0,0};
-//int calibracion[8]={7,14,0,0,-4,8,-5,0};
+//int calibracion[8]={0,0,0,0,0,0,0,0};
+int calibracion[8]={7,14,0,0,-4,8,-5,0};
+//1int calibracion[8]={0,10,10,0,-3,-3,-14,0};
 
 //Posicion inicial
 byte initcomand[1][9]={{90,90,90,90,90,90,90,90,30}};
@@ -66,44 +69,49 @@ void setup()
 void loop() {
   addr = 0;
   val = 0;
+  int i=0;
+  int k=0;
   bool in=false;
+  bool correcto=true;
   //Lee todos los caracteres hasta que termina el mensaje
-  while((val != messEnd) && (addr != EEPROM.length())){
+  while((val != messEnd) && (addr <=990)){
     if(Serial.available()>0){
       val = Serial.read();
-      Serial.println(val);
+      //Serial.println(val);
       if (in) 
       {
-        EEPROM.write(addr, val);
-        addr++;
+       addr++;
+       if (i<9) {
+        comando[k][i]=val;
+        i++;
+       }
+       else if (val==poseEnd) 
+       {
+        Serial.print("buff: ");
+        Serial.println(Serial.available());
+        Serial.println(comando[k][8]);
+        k++;
+        i=0;
+       }
+       else 
+       {
+        correcto =false;
+        break;
+       }
       }
       //Inicio del mensaje
       if (val==messIn) in=true;
       
-      
-      //Serial.println(String(EEPROM[addr]));
-      
     }
   }
   //Ejecutar los comandos
-  if(val == messEnd) 
+  if(val == messEnd && correcto) 
   {
     Serial.print("len::");
     Serial.println(String(addr-1));
-    int k=0; 
-    while((10*k)<(addr-1))
-    {
-      for(int i=0; i<9; i++){
-        comando[k][i] = byte(EEPROM[10*k+i]);
-        //MODO MANUAL
-        Serial.print("k:");
-        Serial.println(k);
-        Serial.println(int(comando[0][i]));
-      }
-      if (int(EEPROM[10*k+9])!=int(poseEnd)) break;
-      k++;
-      Serial.println(k);
-    }
     sima.animation(comando, articulacion, ang, k,  all, all );
   }
 }
+
+
+
