@@ -14,13 +14,13 @@
 #endif
 int filas;
 /*Estado de motores:
+nada: ningun motores
+pies: solo los pies
 sup:solo brazos
 inf: solo solo piernas
-pies: solo los pies
 sPies: solo piernas sin los pies
 sPiesBrazos: todo los motores excepto los pies
 todo: todos los motores
-nada: ningun motores
 */ 
 bool nada[8]={0,0,0,0,0,0,0,0};
 bool pies[8]={1,0,0,0,1,0,0,0};
