@@ -58,6 +58,7 @@ def conectar(puerto):
     ventana.serial.setPort(puerto)
     ventana.serial.open()
     print(puerto)
+
 #INTERFAZ
 
 #Definicion de frames y ventana
