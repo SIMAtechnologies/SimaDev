@@ -14,16 +14,17 @@
  byte messIn=253;
  byte poseEnd = 254;
  byte messEnd = 255;
- //Bufer serial
- byte buff[10];
+ 
  //Almacenamiento de movimiento
  byte comando[110][9];
+
 //condiciones iniciales de las articulaciones
 int _init[8]={90,90,85,90,90,90,95,90};
+
 //calibracion
-//int calibracion[8]={0,0,0,0,0,0,0,0};
-int calibracion[8]={7,14,0,0,-4,8,-5,0};
-//1int calibracion[8]={0,10,10,0,-3,-3,-14,0};
+int calibracion[8]={0,0,0,0,0,0,0,0};
+// int calibracion[8]={7,14,0,0,-4,8,-5,0};
+//int calibracion[8]={0,10,10,0,-3,-3,-14,0};
 
 //Posicion inicial
 byte initcomand[1][9]={{90,90,90,90,90,90,90,90,30}};
@@ -36,7 +37,6 @@ SIMA sima(calibracion);
 int addr = 0;
 byte val;
 
-String palabra;
 //Definicion de motores activos
 /*Estado de motores:
 nada[0]: ningun motores
@@ -56,6 +56,7 @@ bool estadoMotores[7][8]= {
  {0,1,1,1,0,1,1,1},
  {1,1,1,1,1,1,1,1}
 };
+
 void setup()
 {
   //Inicio del puerto Serial
