@@ -17,6 +17,17 @@ startChar=bytes([253])
 endChar=bytes([255])
 poseChar=bytes([254])
 
+# Definicion de estados posibles en los motores public static
+estadoMotores = dict([
+    ("nada", 0),
+    ("pies", 1),
+    ("sup", 2),
+    ("inf", 3),
+    ("sPies", 4),
+    ("sPiesBrazos", 5),
+    ("todo", 6)
+])
+
 #formato de animacion
 direccion="NONE"
 inicio="""  if(cmd=='{}')//M{} - {}
@@ -84,6 +95,10 @@ def enviar():
     sima.send(startChar)
     for angulos in comandosList:
         sima.send(bytes(angulos)+poseChar)
+    mot_inicio=inMotorInicio.get(inMotorInicio.curselection())
+    mot_final=inMotorFinal.get(inMotorFinal.curselection())
+    sima.send(bytes([estadoMotores[mot_inicio]]))
+    sima.send(bytes([estadoMotores[mot_final]]))
     sima.send(endChar)
 
 #centrar: regresa los valores de la pose a la posicion central
