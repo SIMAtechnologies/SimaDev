@@ -10,7 +10,7 @@ maxes= [115,130,145,180,130,140,130,180,250]
 mines= [ 50, 40, 50,  0, 65, 50, 35,  0,  0]
 centro=[ 90, 90, 90, 90, 90, 90, 90, 90, 15]
 L=centro.copy()
-motores=["todo","sup","inf","pies","sPies","nada"]
+motores=["nada","pies","sup","inf","sPies","sPiesBrazos","todo"]
 
 comandosList=[]
 startChar=bytes([253])
@@ -30,14 +30,13 @@ estadoMotores = dict([
 
 #formato de animacion
 direccion="NONE"
-inicio="""  if(cmd=='{}')//M{} - {}
-    {{
-        byte movimiento[][9] = {{\n"""
+inicio = """            case '{}': //M{} - {}
+                {{
+                    byte[,] movimiento = new byte[,] {{\n"""
 
-fin="""		}};
-    filas = sizeof(movimiento)/sizeof(movimiento[0]);
-    animation(movimiento, articulacion, angulo, filas,{},{});
-    }}\n"""
+fin = """                }};
+                    return BytesMovimiento(movimiento, "{}", "{}");
+                }}\n"""
 
 #updatetexto: Actualiza la pose a los valores de los cuadros de texto
 def updateTexto(x):
@@ -70,8 +69,8 @@ def printAnimacion(x=None):
     animacion.insert(tkinter.END,inicio.format(inLetra.get(),inCod.get(),inDescp.get()))
     if len(comandosList) > 0:
         for angulos in comandosList[:-1]:
-            animacion.insert(tkinter.END, "\t\t\t" + formatoAngulos(angulos) + ", \n")
-        animacion.insert(tkinter.END, "\t\t\t" + formatoAngulos(comandosList[-1]) + "\n")
+            animacion.insert(tkinter.END, " "*16 + formatoAngulos(angulos) + ", \n")
+        animacion.insert(tkinter.END, " "*16 + formatoAngulos(comandosList[-1]) + "\n")
     animacion.insert(tkinter.END, fin.format(inMotorInicio.get(inMotorInicio.curselection()),
                                              inMotorFinal.get(inMotorFinal.curselection())))
 
@@ -207,7 +206,7 @@ def cargarArchivo():
     global archivo
     global movimientos
     file = tkinter.filedialog.askopenfilename(initialdir="/", title="Seleccionar archivo de movimientos",
-                                              filetypes=(("Libreria", "*.cpp"), ("Todos los archivos", "*.*")))
+                                              filetypes=(("Libreria", "*.cs"), ("Todos los archivos", "*.*")))
     if file != '':
         archivo = file
         movimientos = Movimientos(archivo)

@@ -18,7 +18,7 @@ class Movimientos:
             self.listaMovi=[]
             pos = 0
             for line in f:
-                ind = line.find("')//M")
+                ind = line.find(": //M")
                 if ind > 0:
                     self.listaMovi.append((line[ind + 4:ind + 7], pos))
                 pos += (len(line) + 1)
@@ -35,7 +35,7 @@ class Movimientos:
         f.seek(self.listaMovi[num][1])
         header = f.readline()
         try:
-            comando=header[header.find('cmd')+6]
+            comando=header[header.find("case '")+6]
             descripcion = header[header.find('-') + 2:-1]
             f.readline()
             f.readline()
@@ -46,10 +46,9 @@ class Movimientos:
                 movimientos.append(pose)
                 linea = f.readline()
             # Buscar motores
-            f.readline()
             funcion = f.readline().split(',')
-            mot_inicio = funcion[4]
-            mot_final = funcion[5].rstrip('\n;)')
+            mot_inicio = funcion[1].strip('\" ')
+            mot_final = funcion[2].strip('\n\" ;)')
         except (IndexError, ValueError):
             f.close()
             raise ArchivoModificado("El archivo original ha sido modificado o no tiene el formato correcto")
