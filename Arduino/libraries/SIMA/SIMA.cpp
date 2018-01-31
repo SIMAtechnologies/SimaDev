@@ -105,21 +105,24 @@ int* SIMA::mover(int cmd, Servo articulacion[], int angulo[], int orden[], byte 
 	{
 	int comparacion = 1;
 	int columnas = 8;
+	int anguloObjetivo[8];
 	for(int i = 0; i < filas; i++){
 		int tdelay= movimiento[i][8];
+		for (int k=0; k < columnas; k++) {
+			anguloObjetivo[k]=movimiento[i][k]+offset[k];
+		}
 		tarea:
 		comparacion=0;
 		for(int j = 0; j < columnas; j++){
-			int anguloObjetivo=movimiento[i][orden[j]]+offset[orden[j]];
-			if(angulo[orden[j]] < anguloObjetivo){
-				angulo[orden[j]] = constrain(angulo[orden[j]]+1, 0, anguloObjetivo);
+			if(angulo[orden[j]] < anguloObjetivo[orden[j]]){
+				angulo[orden[j]] = constrain(angulo[orden[j]]+1, 0, anguloObjetivo[orden[j]]);
 				articulacion[orden[j]].write(angulo[orden[j]]);
 			}
-			if(angulo[orden[j]] > anguloObjetivo){
-				angulo[orden[j]] = constrain(angulo[orden[j]]-1, anguloObjetivo, 180);
+			if(angulo[orden[j]] > anguloObjetivo[orden[j]]){
+				angulo[orden[j]] = constrain(angulo[orden[j]]-1, anguloObjetivo[orden[j]], 180);
 				articulacion[orden[j]].write(angulo[orden[j]]);
 			}
-		comparacion+=abs(angulo[orden[j]]-anguloObjetivo);
+		comparacion+=abs(angulo[orden[j]]-anguloObjetivo[orden[j]]);
 		}delay(tdelay);
 		
 		if(comparacion != 0){
@@ -135,7 +138,6 @@ void SIMA::motores(Servo articulacion[],bool activacion[]){
 		{
 			if(activacion[i]){
 			  articulacion[i].attach(4+i);
-			  articulacion[i].write(angulo[i]);
 			}else{
 			  articulacion[i].detach();
 			}
