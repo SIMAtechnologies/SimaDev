@@ -1,3 +1,6 @@
+#Autor: Javier Urrutia
+#Email: javier.urrutia.r@ug.uchile.cl
+
 import tkinter
 from tkinter import filedialog
 from MoveRead import *

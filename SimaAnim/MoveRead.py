@@ -1,3 +1,6 @@
+#Autor: Javier Urrutia
+#Email: javier.urrutia.r@ug.uchile.cl
+
 #Excepcion de archivo modificado
 class ArchivoModificado(Exception):
     pass

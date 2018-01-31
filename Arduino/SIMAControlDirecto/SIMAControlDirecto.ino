@@ -1,3 +1,7 @@
+ /*Autor: Javier Urrutia
+  *Email: javier.urrutia.r@ug.uchile.cl
+  */
+ 
  /*
  *DISTRIBUCIÓN DE VARIABLES EN EL CUERPO
  *               CABEZA 
@@ -6,7 +10,6 @@
  *       L2-D3  -RODILLAS - D7 -D2
  *       L1-D2  -TALONES  - D6 -D1
  */
-
 
 #include <SIMA.h>
 #include <EEPROM.h>
@@ -33,7 +36,11 @@ int ang[8];
 //Servo L1, L2, L3, L4; //Izquierda:  Tobillo, Rodilla, Cadera, Hombro. 
 //Servo R1, R2, R3, R4; //Derecha:    Tobillo, Rodilla, Cadera, Hombro.
 Servo articulacion[8];
+
+//Inicio de sima
 SIMA sima(calibracion);
+
+//Variables del programa
 int addr = 0;
 byte val;
 
@@ -48,13 +55,13 @@ sPiesBrazos[5]: todo los motores excepto los pies
 todo[6]: todos los motores
 */ 
 bool estadoMotores[7][8]= {
- {0,0,0,0,0,0,0,0},
- {1,0,0,0,1,0,0,0},
- {0,0,0,1,0,0,0,1},
- {1,1,1,0,1,1,1,0},
- {0,1,1,0,0,1,1,0},
- {0,1,1,1,0,1,1,1},
- {1,1,1,1,1,1,1,1}
+ {0,0,0,0,0,0,0,0},//nada
+ {1,0,0,0,1,0,0,0},//pies
+ {0,0,0,1,0,0,0,1},//sup
+ {1,1,1,0,1,1,1,0},//inf
+ {0,1,1,0,0,1,1,0},//sPies
+ {0,1,1,1,0,1,1,1},//sPiesBrazos
+ {1,1,1,1,1,1,1,1}//todo
 };
 
 void setup()
