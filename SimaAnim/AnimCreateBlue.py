@@ -224,7 +224,7 @@ fDisplay = tkinter.Frame(fVD)
 fAnimaciones= tkinter.Frame(fParametros)
 
 #Barras para in elegir angulo
-labels=["Talon I","Rodilla I", "Caderas I", "Hombro I", "Talon D","Rodilla D", "Caderas D", "Hombro D", "Delay"]
+labels=["Talon I","Rodilla I", "Cadera I", "Hombro I", "Talon D","Rodilla D", "Cadera D", "Hombro D", "Delay"]
 barras = []
 texto = []
 for i in range(9):
