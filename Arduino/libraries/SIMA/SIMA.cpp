@@ -134,8 +134,8 @@ void SIMA::motores(Servo articulacion[],bool activacion[]){
 	for (int i = 0;i < 8; i++)
 		{
 			if(activacion[i]){
-			  articulacion[i].attach(4+i);//, 800, 2200);
-			  //articulacion[i].write(angulo[i]);
+			  articulacion[i].attach(4+i);
+			  articulacion[i].write(angulo[i]);
 			}else{
 			  articulacion[i].detach();
 			}
