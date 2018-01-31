@@ -12,8 +12,8 @@ class SinArchivo(Exception):
     pass
 
 #VARIABLES
-maxes= [ 45, 45, 45, 45, 45, 45, 45, 45]
-mines= [-45,-45,-45,-45,-45,-45,-45,-45]
+maxes= [ 30, 30, 30, 30, 30, 30, 30, 30]
+mines= [-30,-30,-30,-30,-30,-30,-30,-30]
 centro=[  0,  0,  0,  0,  0,  0,  0, 0,]
 textoCalib="int calibracion[8] = "
 startChar=bytes([253])
@@ -146,6 +146,14 @@ def conectar(puerto):
     ventana.serial.open()
     print(puerto)
 
+#copiar: copia la linea de calibracion
+def copiar():
+    clip = tkinter.Tk()
+    clip.withdraw()
+    clip.clipboard_clear()
+    clip.clipboard_append(ventanaCalib.get("1.0",'end-1c'))
+    clip.destroy()
+
 #INTERFAZ
 
 #Definicion de frames y ventana
@@ -156,11 +164,13 @@ fBD=tkinter.Frame(fDown)
 fBDButton=tkinter.Frame(fBD)
 fValores = tkinter.Frame(fUP)
 fC=tkinter.Frame(fDown)
+fcButton=tkinter.Frame(fC)
 
 #Variables del programa
 ventana.L=centro.copy()
 ventana.blueDev=[]
 ventana.sima=""
+ventana.serial=serial.Serial()
 
 #Barras para in elegir angulo
 labels=["Talon I","Rodilla I", "Cadera I", "Hombro I", "Talon D","Rodilla D", "Cadera D", "Hombro D", "Delay"]
@@ -178,8 +188,9 @@ tkinter.Button(fUP, text="centrar", command=centrar).grid(row=1, column=0)
 tkinter.Label(fC, text="Calibracion").grid(row=0, column=0)
 ventanaCalib=tkinter.Text(fC, width=60, height=2,)
 ventanaCalib.grid(row=1, column=0)
-tkinter.Button(fC, text="Guardar", command=guardar).grid(row=2, column=0)
-
+tkinter.Button(fcButton, text="Guardar", command=guardar).grid(row=0, column=0)
+tkinter.Button(fcButton, text="Copiar", command=copiar).grid(row=0, column=1)
+fcButton.grid(row=2, column=0)
 
 #Lista de dispositivos Bluetooth
 tkinter.Label(fBD, text="Dispositivos").grid(row=0, column=0)
@@ -189,6 +200,7 @@ bluetothList.grid(row=1, column=0)
 
 #Botones de lista bluettoth
 tkinter.Button(fBDButton, text="Buscar", command=blueSearch).grid(row=0, column=0)
+tkinter.Button(fBDButton, text="Cerrar puerto", command=lambda: ventana.serial.close()).grid(row=0, column=1)
 fBDButton.grid(row=2, column=0)
 
 #Definicion de geometria
@@ -211,7 +223,6 @@ menuPuertos=tkinter.Menu(menu)
 menu.add_cascade(label="Puertos", menu=menuPuertos)
 for puerto in ventana.puertos:
     menuPuertos.add_command(label=puerto, command=lambda: conectar(puerto))
-ventana.serial=serial.Serial()
 if len(ventana.puertos)>0:
     conectar(ventana.puertos[0])
 
