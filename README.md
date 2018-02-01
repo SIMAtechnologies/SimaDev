@@ -1,9 +1,9 @@
 # SimaDev
 Sima delvelopment repo
 
-##SimaAnim
+## SimaAnim
 Interfaz para crear animaciones en sima
 
-###Requisitos:
-*pybluez
-*pyserial
+### Requisitos:
+* pybluez
+* pyserial
