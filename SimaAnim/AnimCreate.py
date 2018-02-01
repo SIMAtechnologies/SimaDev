@@ -1,28 +1,29 @@
-#Autor: Javier Urrutia
-#Email: javier.urrutia.r@ug.uchile.cl
+# Autor: Javier Urrutia
+# Email: javier.urrutia.r@ug.uchile.cl
 
 import tkinter
 from tkinter import filedialog
 from MoveRead import *
 
-maxes= [115,130,145,180,130,140,130,180,250]
-mines= [ 50, 40, 50,  0, 65, 50, 35,  0,  0]
-centro=[ 90, 90, 90, 90, 90, 90, 90, 90, 15]
-L=centro.copy()
-motores=["nada","pies","sup","inf","sPies","sPiesBrazos","todo"]
+maxes = [115, 130, 145, 180, 130, 140, 130, 180, 250]
+mines = [50, 40, 50, 0, 65, 50, 35, 0, 0]
+centro = [90, 90, 90, 90, 90, 90, 90, 90, 15]
+L = centro.copy()
+motores = ["nada", "pies", "sup", "inf", "sPies", "sPiesBrazos", "todo"]
 
-comandosList=[]
-accionStr="insertar"
+comandosList = []
+accionStr = "insertar"
 
-inicio="""            case '{}': //M{} - {}
+inicio = """            case '{}': //M{} - {}
                 {{
                     byte[,] movimiento = new byte[,] {{\n"""
 
-fin="""                }};
+fin = """                }};
                     return BytesMovimiento(movimiento, "{}", "{}");
                 }}\n"""
 
-#updatetexto: Actualiza la pose a los valores de los cuadros de texto
+
+# updatetexto: Actualiza la pose a los valores de los cuadros de texto
 def updateTexto(x):
     for i in range(9):
         try:
@@ -31,66 +32,73 @@ def updateTexto(x):
         except:
             return
 
-#updateBarra: Actualiza la pose a los valores fijados en las barras
+
+# updateBarra: Actualiza la pose a los valores fijados en las barras
 def updateBarra(x):
     for i in range(9):
         num = int(barras[i].get())
         texto[i].delete(0, tkinter.END)
         texto[i].insert(0, str(num))
         L[i] = num
-    comando.set("comando a insertar"+str(L))
+    comando.set("comando a insertar" + str(L))
 
-#formatoAngulos: Retorna un string con el formato de los comandos de angulos
+
+# formatoAngulos: Retorna un string con el formato de los comandos de angulos
 def formatoAngulos(angulos):
-    angText="{"
+    angText = "{"
     for ang in angulos[:-1]:
-        angText+= str(ang).rjust(3)+","
-    return angText+str(angulos[-1]).rjust(3)+"}"
+        angText += str(ang).rjust(3) + ","
+    return angText + str(angulos[-1]).rjust(3) + "}"
 
-#printAnimacion:actualiza la animacion de la pantalla
+
+# printAnimacion:actualiza la animacion de la pantalla
 def printAnimacion(x=None):
     animacion.config(state=tkinter.NORMAL)
     animacion.delete(1.0, tkinter.END)
-    animacion.insert(tkinter.END,inicio.format(inLetra.get(),inCod.get().rjust(2,'0'),inDescp.get()))
+    animacion.insert(tkinter.END, inicio.format(inLetra.get(), inCod.get().rjust(2, '0'), inDescp.get()))
     if len(comandosList) > 0:
         for angulos in comandosList[:-1]:
-            animacion.insert(tkinter.END, " "*16 + formatoAngulos(angulos) + ", \n")
-        animacion.insert(tkinter.END, " "*16 + formatoAngulos(comandosList[-1]) + "\n")
+            animacion.insert(tkinter.END, " " * 16 + formatoAngulos(angulos) + ", \n")
+        animacion.insert(tkinter.END, " " * 16 + formatoAngulos(comandosList[-1]) + "\n")
     animacion.insert(tkinter.END, fin.format(inMotorInicio.get(inMotorInicio.curselection()),
                                              inMotorFinal.get(inMotorFinal.curselection())))
 
     animacion.config(state=tkinter.DISABLED)
 
 
-#agregar: agrega una pose a la animacion
+# agregar: agrega una pose a la animacion
 def agregar():
     comandosList.append(L.copy())
     poses.insert(tkinter.END, formatoAngulos(L))
     printAnimacion()
 
-#atras: Borra la ultima pose agregada
+
+# atras: Borra la ultima pose agregada
 def atras():
-    if len(comandosList) >0:
+    if len(comandosList) > 0:
         comandosList.pop()
         poses.delete(tkinter.END)
     printAnimacion()
 
-#centrar: regresa los valores de la pose a la posicion central
+
+# centrar: regresa los valores de la pose a la posicion central
 def centrar():
     for i in range(8):
         barras[i].set(centro[i])
 
-#eliminar: Elimina la pose seleccionada de la animacion
+
+# eliminar: Elimina la pose seleccionada de la animacion
 def eliminar():
     try:
-        ind=poses.curselection()[0]
+        ind = poses.curselection()[0]
     except:
         return
     poses.delete(tkinter.ANCHOR)
     comandosList.pop(ind)
     printAnimacion()
 
-#cargarPose: carga una pose a las barras y cuadros de texto
+
+# cargarPose: carga una pose a las barras y cuadros de texto
 def cargarPose():
     global L
     global accionStr
@@ -112,7 +120,8 @@ def cargarPose():
     bModificar.config(state=tkinter.DISABLED)
     bEliminar.config(state=tkinter.DISABLED)
 
-#modificar: cambia los valores de una pose por los valores actuales
+
+# modificar: cambia los valores de una pose por los valores actuales
 def modificar():
     global accionStr
     global L
@@ -128,36 +137,38 @@ def modificar():
     poses.insert(ind, formatoAngulos(L))
     printAnimacion()
 
-#cargarAnim: carga una animacion desde un archivo
+
+# cargarAnim: carga una animacion desde un archivo
 def cargarAnim():
     global comandosList
     global movimientos
     try:
-        ind=anim.curselection()[0]
+        ind = anim.curselection()[0]
     except:
         return
-    #cargar animacion
-    lista_poses, com, num, descpt, mot_inicio, mot_final=movimientos.leerMov(ind)
-    comandosList=lista_poses.copy()
+    # cargar animacion
+    lista_poses, com, num, descpt, mot_inicio, mot_final = movimientos.leerMov(ind)
+    comandosList = lista_poses.copy()
     inLetra.delete(0, tkinter.END)
     inLetra.insert(0, com)
     inCod.delete(0, tkinter.END)
     inCod.insert(0, num)
     inDescp.delete(0, tkinter.END)
     inDescp.insert(0, descpt)
-    #cambiar motores
+    # cambiar motores
     inMotorInicio.select_clear(inMotorInicio.curselection())
     inMotorInicio.select_set(motores.index(mot_inicio))
     inMotorFinal.select_clear(inMotorFinal.curselection())
     inMotorFinal.select_set(motores.index(mot_final))
-    #cargar poses
-    poses.delete(0,tkinter.END)
+    # cargar poses
+    poses.delete(0, tkinter.END)
     for item in lista_poses:
-        poses.insert(tkinter.END,formatoAngulos(item))
-    #actualizar pantalla
+        poses.insert(tkinter.END, formatoAngulos(item))
+    # actualizar pantalla
     printAnimacion()
 
-#rcargarArchivo: carga la lista de animaciones de un archivo
+
+# rcargarArchivo: carga la lista de animaciones de un archivo
 def recargarArchivo():
     global archivo
     global movimientos
@@ -166,83 +177,85 @@ def recargarArchivo():
     for mov in movimientos.listaMovi:
         anim.insert(tkinter.END, mov[0])
 
-#Cuadro de dialogo para abrir archivo
+
+# Cuadro de dialogo para abrir archivo
 def cargarArchivo():
     global archivo
     global movimientos
-    file=tkinter.filedialog.askopenfilename(initialdir = "/" ,title = "Seleccionar archivo de movimientos",
-                                            filetypes=(("Libreria", "*.cs"), ("Todos los archivos", "*.*")))
-    if file !='':
-        archivo=file
-        movimientos=Movimientos(archivo)
+    file = tkinter.filedialog.askopenfilename(initialdir="/", title="Seleccionar archivo de movimientos",
+                                              filetypes=(("Libreria", "*.cs"), ("Todos los archivos", "*.*")))
+    if file != '':
+        archivo = file
+        movimientos = Movimientos(archivo)
         anim.delete(0, tkinter.END)
         for mov in movimientos.listaMovi:
             anim.insert(tkinter.END, mov[0])
 
 
-#Definicion de frames y ventana
+# Definicion de frames y ventana
 ventana = tkinter.Tk()
-fVD=tkinter.Frame(ventana)
+fVD = tkinter.Frame(ventana)
 fValores = tkinter.Frame(fVD)
 fAcciones = tkinter.Frame(ventana)
 fParametros = tkinter.Frame(ventana)
 fDisplay = tkinter.Frame(fVD)
-fAnimaciones= tkinter.Frame(fParametros)
+fAnimaciones = tkinter.Frame(fParametros)
 
-#Barras para in elegir angulo
-labels=["Talon I","Rodilla I", "Cadera I", "Hombro I", "Talon D","Rodilla D", "Cadera D", "Hombro D", "Delay"]
+# Barras para in elegir angulo
+labels = ["Talon I", "Rodilla I", "Cadera I", "Hombro I", "Talon D", "Rodilla D", "Cadera D", "Hombro D", "Delay"]
 barras = []
 texto = []
 for i in range(9):
-    tkinter.Label(fValores, text="Grados " + labels[i]).grid(row=0, column=i)
-    barras.append(tkinter.Scale(fValores, from_=maxes[i], to=mines[i], length=360, tickinterval=20, command=updateBarra))
+    tkinter.Label(fValores, text=labels[i]).grid(row=0, column=i)
+    barras.append(
+        tkinter.Scale(fValores, from_=maxes[i], to=mines[i], length=360, tickinterval=20, command=updateBarra))
     barras[i].grid(row=1, column=i)
     barras[i].set(L[i])
     texto.append(tkinter.Entry(fValores, width=7))
-    texto[i].grid(row=2,column=i)
-    texto[i].insert(0,L[i])
+    texto[i].grid(row=2, column=i)
+    texto[i].insert(0, L[i])
     texto[i].bind(sequence='<KeyRelease>', func=updateTexto)
 
-#Ventana de texto
-animacion=tkinter.Text(fDisplay, width=70)
+# Ventana de texto
+animacion = tkinter.Text(fDisplay, width=70)
 animacion.grid(row=1, column=0)
-comando=tkinter.StringVar()
-comando.set("comando a "+accionStr+str(L))
+comando = tkinter.StringVar()
+comando.set("comando a " + accionStr + str(L))
 tkinter.Label(fDisplay, textvariable=comando).grid(row=0, column=0)
 
-#Lista de movimientos
+# Lista de movimientos
 tkinter.Label(fAnimaciones, text="Animaciones").grid(row=0, column=0)
 scrollPoseAnim = tkinter.Scrollbar(fAnimaciones, orient=tkinter.VERTICAL, width=40)
-anim=tkinter.Listbox(fAnimaciones, selectmode=tkinter.SINGLE, exportselection=0,width=35,
-                      yscrollcommand=scrollPoseAnim.set)
+anim = tkinter.Listbox(fAnimaciones, selectmode=tkinter.SINGLE, exportselection=0, width=35,
+                       yscrollcommand=scrollPoseAnim.set)
 scrollPoseAnim.config(command=anim.yview)
 anim.grid(row=1, column=0)
 scrollPoseAnim.grid(row=1, column=7)
-fAnimButton=tkinter.Frame(fAnimaciones)
+fAnimButton = tkinter.Frame(fAnimaciones)
 tkinter.Button(fAnimButton, text="Cargar", command=cargarAnim).grid(row=0, column=0)
 tkinter.Button(fAnimButton, text="Abrir Archivo", command=cargarArchivo).grid(row=0, column=1)
 tkinter.Button(fAnimButton, text="Recargar animaciones", command=recargarArchivo).grid(row=0, column=2)
 fAnimButton.grid(row=2, column=0)
 fAnimaciones.grid(row=1, column=0)
 
-#Ingreso de parameros (comando y motores activados)
+# Ingreso de parameros (comando y motores activados)
 tkinter.Label(fParametros, text="comando").grid(row=0, column=1)
-inLetra=tkinter.Entry(fParametros)
+inLetra = tkinter.Entry(fParametros)
 inLetra.bind(sequence='<KeyRelease>', func=printAnimacion)
 inLetra.grid(row=1, column=1)
 
-#Motor al inicio
+# Motor al inicio
 tkinter.Label(fParametros, text="Motor Inicio").grid(row=0, column=2)
-inMotorInicio=tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0)
+inMotorInicio = tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0)
 inMotorInicio.bind('<<ListboxSelect>>', printAnimacion)
 inMotorInicio.grid(row=1, column=2)
 
-#Motor al final
+# Motor al final
 tkinter.Label(fParametros, text="Motor Final").grid(row=0, column=3)
-inMotorFinal=tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0)
+inMotorFinal = tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0)
 inMotorFinal.bind('<<ListboxSelect>>', printAnimacion)
 inMotorFinal.grid(row=1, column=3)
-#Insertar opciones
+# Insertar opciones
 for item in motores:
     inMotorInicio.insert(tkinter.END, item)
     inMotorFinal.insert(tkinter.END, item)
@@ -251,39 +264,39 @@ inMotorInicio.event_generate("<<ListboxSelect>>")
 inMotorFinal.select_set(0)
 inMotorFinal.event_generate("<<ListboxSelect>>")
 
-#Comentarios
+# Comentarios
 tkinter.Label(fParametros, text="Codigo").grid(row=0, column=4)
-inCod=tkinter.Entry(fParametros)
+inCod = tkinter.Entry(fParametros)
 inCod.bind(sequence='<KeyRelease>', func=printAnimacion)
 inCod.grid(row=1, column=4)
 
 tkinter.Label(fParametros, text="Descripcion").grid(row=0, column=5)
-inDescp=tkinter.Entry(fParametros, width=40)
+inDescp = tkinter.Entry(fParametros, width=40)
 inDescp.bind(sequence='<KeyRelease>', func=printAnimacion)
 inDescp.grid(row=1, column=5)
 
-#Ventana de poses
+# Ventana de poses
 tkinter.Label(fParametros, text="Poses").grid(row=0, column=6)
 scrollPose = tkinter.Scrollbar(fParametros, orient=tkinter.VERTICAL)
-poses=tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0,width=35,
-                      yscrollcommand=scrollPose.set)
+poses = tkinter.Listbox(fParametros, selectmode=tkinter.SINGLE, exportselection=0, width=35,
+                        yscrollcommand=scrollPose.set)
 scrollPose.config(command=poses.yview)
 poses.grid(row=1, column=6)
 scrollPose.grid(row=1, column=7)
-bEliminar=tkinter.Button(fParametros, text="Eliminar", command=eliminar)
+bEliminar = tkinter.Button(fParametros, text="Eliminar", command=eliminar)
 bEliminar.grid(row=3, column=6)
-bModificar=tkinter.Button(fParametros, text="Modificar", command=cargarPose)
+bModificar = tkinter.Button(fParametros, text="Modificar", command=cargarPose)
 bModificar.grid(row=3, column=7)
 
-#Botones de accion
+# Botones de accion
 
-accion=tkinter.Button(fAcciones, text="Agregar", command=agregar)
+accion = tkinter.Button(fAcciones, text="Agregar", command=agregar)
 accion.grid(row=0, column=0)
-bAtras=tkinter.Button(fAcciones, text="Atrás", command=atras)
+bAtras = tkinter.Button(fAcciones, text="Atrás", command=atras)
 bAtras.grid(row=0, column=1)
 tkinter.Button(fAcciones, text="centrar", command=centrar).grid(row=0, column=2)
 
-#Definicion de geometria
+# Definicion de geometria
 fValores.pack(side=tkinter.LEFT)
 fDisplay.pack(side=tkinter.LEFT)
 fVD.pack()

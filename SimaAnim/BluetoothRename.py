@@ -44,7 +44,7 @@ def rename():
     if not conectOk(modulo):
         ventana.response.set("Fallo")
         return
-    name=bytes(ventanaNombre.get("1.0",'end-1c'),"utf8")
+    name=bytes(ventanaNombre.get("1.0", 'end-1c'),"utf8")
     print(b'AT+NAME'+name+ventana.mod[modulo])
     ventana.serial.write(b'AT+NAME'+name+ventana.mod[modulo])
     tic = time.time()
