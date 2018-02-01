@@ -5,3 +5,5 @@ dist/
 SimaAnim/AnimCreateBlue.spec
 SimaAnim/AnimCreate.spec
 SimaAnim/BluetoothRename.spec
+SimaAnim/CrearDatabaseCalibracion.spec
+SimaAnim/SimaCalibrar.spec
