@@ -9,7 +9,7 @@ Sima delvelopment repo
 ## SimaAnim
 
 * __AnimCreate__: Interfaz para crear animaciones en Sima
-* __luetoothRename__: Interfaz para cambiar el nombre de bluetooth
+* __BluetoothRename__: Interfaz para cambiar el nombre de bluetooth
 * __SimaCalibrar__: Interfaz para calibrar Sima
 
 ### utilidades:
