@@ -36,7 +36,8 @@ byte comando[110][9];
 int _init[8] = {90, 90, 85, 90, 90, 90, 95, 90};
 
 //calibracion
-int calibracion[8] = {  0,  0,  0,  0,  0,  0,  0,  0};
+//int calibracion[8] = {  0,  0,  0,  0,  0,  0,  0,  0};
+int calibracion[8] = { 18, -4, 18,  0,  0,  3,-10,  0};
 //int calibracion[8] = {  7, 14, -2,  0, -6,  9, -4,  0};
 //int calibracion[8]={0,10,10,0,-3,-3,-14,0};
 
@@ -161,6 +162,7 @@ void loop() {
       //Serial.print("len::");
       //Serial.println(String(addr-1));
       if (battSafe) {
+        Serial.println("Recibido");
         sima.animation(comando, articulacion, ang, k,  estadoMotores[mot_inicio], estadoMotores[mot_final] );
       }
       Serial.println("k");
@@ -181,9 +183,10 @@ void battMonitor(){
     if (battLevel <= 900) { //Enviar porcentaje
       
       int porcentaje = constrain((battLevel - battEmpty)*100/(battFull - battEmpty), 0, 100);
-      Serial.println(porcentaje);
+      Serial.print("Bateria = ");
+      Serial.println(battLevel);
     }
-    else Serial.println("C");//Cargando
+    else Serial.println("Estado = C");//Cargando
     tUlS=millis();
   }
   //Desactivacion a los 3.2 y reactivacion a los 3.4
