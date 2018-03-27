@@ -96,9 +96,9 @@ void setup()
 
   //A espera del primer comando
   //Serial.print("Ingrese un comando\n");
-//  while (Serial.available() <= 0) {
-//    delay(500);
-//  }
+  //  while (Serial.available() <= 0) {
+  //    delay(500);
+  //  }
 }
 
 void loop() {
@@ -114,8 +114,8 @@ void loop() {
 
   //Lee todos los caracteres hasta que termina el mensaje
   while ((val != messEnd) && (addr <= 990)) {
-     battMonitor();//Mmonitorear bateria
-    
+    battMonitor();//Mmonitorear bateria
+
     if (Serial.available() > 0) {
       val = Serial.read();
       //Serial.println(val);
@@ -169,30 +169,33 @@ void loop() {
 
 }
 
-void battMonitor(){
-    //Revisar bateria
+void battMonitor() {
+  //Revisar bateria
   if ((millis() - tUlL) > 100) {
-    battLevel +=(analogRead(battPin)-battLevel)>>4;
+    battLevel += (analogRead(battPin) - battLevel) >> 4;
+
+    //Desactivacion a los 3.2 y reactivacion a los 3.6
+    if ((battLevel <= (battEmpty + 25)) && battSafe) {
+      battSafe = false;
+    }
+    else if ((battLevel >= battReset) && !battSafe) {
+      battSafe = true;
+    }
+
     tUlL = millis();
     //Serial.println(battLevel);
   }
   //Enviar estado de la bateria
   if (millis() - tUlS > dT) {
     if (battLevel <= 900) { //Enviar porcentaje
-      
-      int porcentaje = constrain((battLevel - battEmpty)*100/(battFull - battEmpty), 0, 100);
+
+      int porcentaje = constrain((battLevel - battEmpty) * 100 / (battFull - battEmpty), 0, 100);
       Serial.print("Bateria = ");
       Serial.println(porcentaje);
     }
     else Serial.println("Estado = C");//Cargando
-    tUlS=millis();
+    tUlS = millis();
   }
-  //Desactivacion a los 3.2 y reactivacion a los 3.6
-  if (battLevel <= (battEmpty+25)) {
-    battSafe = false;
-  }
-  else if (battLevel >= battReset) {
-    battSafe = true;
-  }
+
 }
 
