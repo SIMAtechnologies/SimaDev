@@ -18,11 +18,11 @@ byte messIn = 253;
 byte poseEnd = 254;
 byte messEnd = 255;
 
-//Estado de bateria
+//Estado de bateria(V=(battLevel+53)/210)
 int battLevel;
-int battFull = 810; //4V
-int battEmpty = 655; //3.2V
-int battReset = 700; //3.4V
+int battFull = 807; //4V
+int battEmpty = 618; //3.2V
+int battReset = 702; //3.6V
 int battPin = A0; //Pin de lectura
 bool battSafe = true; //Controla que la bateria es suficiente para realizar animaciones
 long int tUlL = 0; //Tiempo de la ultima lectura
@@ -36,10 +36,8 @@ byte comando[110][9];
 int _init[8] = {90, 90, 85, 90, 90, 90, 95, 90};
 
 //calibracion
-//int calibracion[8] = {  0,  0,  0,  0,  0,  0,  0,  0};
-int calibracion[8] = { 18, -4, 18,  0,  0,  3,-10,  0};
-//int calibracion[8] = {  7, 14, -2,  0, -6,  9, -4,  0};
-//int calibracion[8]={0,10,10,0,-3,-3,-14,0};
+int calibracion[8] = {  0,  0,  0,  0,  0,  0,  0,  0};
+
 
 //Posicion inicial
 byte initcomand[1][9] = {{90, 90, 90, 90, 90, 90, 90, 90, 30}};
@@ -116,7 +114,7 @@ void loop() {
 
   //Lee todos los caracteres hasta que termina el mensaje
   while ((val != messEnd) && (addr <= 990)) {
-    battMonitor();//Mmonitorear bateria
+     battMonitor();//Mmonitorear bateria
     
     if (Serial.available() > 0) {
       val = Serial.read();
@@ -184,13 +182,13 @@ void battMonitor(){
       
       int porcentaje = constrain((battLevel - battEmpty)*100/(battFull - battEmpty), 0, 100);
       Serial.print("Bateria = ");
-      Serial.println(battLevel);
+      Serial.println(porcentaje);
     }
     else Serial.println("Estado = C");//Cargando
     tUlS=millis();
   }
   //Desactivacion a los 3.2 y reactivacion a los 3.4
-  if (battLevel <= battEmpty) {
+  if (battLevel <= (battEmpty+25)) {
     battSafe = false;
   }
   else if (battLevel >= battReset) {
