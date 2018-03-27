@@ -187,7 +187,7 @@ void battMonitor(){
     else Serial.println("Estado = C");//Cargando
     tUlS=millis();
   }
-  //Desactivacion a los 3.2 y reactivacion a los 3.4
+  //Desactivacion a los 3.2 y reactivacion a los 3.6
   if (battLevel <= (battEmpty+25)) {
     battSafe = false;
   }
