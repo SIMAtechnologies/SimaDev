@@ -57,6 +57,8 @@ public:
 	int* motor(int cmd, Servo articulacion[], int angulo[], int orden[], byte movimiento[][9], int filas);
 	void motores(Servo articulacion[], bool activacion[]);
 	void* animation(byte movimiento[][9], Servo articulacion[], int angulo[], int filas,bool mot_inicio[], bool mot_final[]);
+	//Configura la calibracion
+	void setCalib(int calibracion[8]);
 	//-- Battery
 	void voltajeBateria();
 private:

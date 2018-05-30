@@ -33,7 +33,7 @@ bool todo[8]={1,1,1,1,1,1,1,1};
 
 SIMA::SIMA(int calibracion[8]){
 	offset = new int[8];
-	memcpy(offset,calibracion,sizeof(int)*8);
+	setCalib(calibracion);
 }
 ///////////////////////////////////////
 //- FUNCIONES BASICAS DE MOVIMIENTO -//
@@ -501,6 +501,13 @@ int SIMA::control(int cmd, Servo articulacion[], int angulo[]){
     }
 
 }
+////////////////////////////
+//- COANDOS DE CALIBRACION -//
+////////////////////////////
+void SIMA::setCalib(int calibracion[8]) {
+	memcpy(offset,calibracion,sizeof(int)*8);
+}
+
 ////////////////////////////
 //- MONITOREO DE BATERIA -//
 ////////////////////////////

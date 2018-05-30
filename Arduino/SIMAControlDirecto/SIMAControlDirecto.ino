@@ -29,15 +29,15 @@ long int tUlL = 0; //Tiempo de la ultima lectura
 long int tUlS = 0; //Tiempo de ultimo envío
 int dT = 2000; //Periodo de envio de estado
 
+//calibracion
+int calibracion[8] = {  0,  0,  0,  0,  0,  0,  0,  0};
+
+
 //Almacenamiento de movimiento
 byte comando[110][9];
 
 //condiciones iniciales de las articulaciones
 int _init[8] = {90, 90, 85, 90, 90, 90, 95, 90};
-
-//calibracion
-int calibracion[8] = {  0,  0,  0,  0,  0,  0,  0,  0};
-
 
 //Posicion inicial
 byte initcomand[1][9] = {{90, 90, 90, 90, 90, 90, 90, 90, 30}};
@@ -74,11 +74,49 @@ bool estadoMotores[7][8] = {
   {1, 1, 1, 1, 1, 1, 1, 1} //todo
 };
 
+//Funcion que monitorea la baeria
+void battMonitor() {
+  //Revisar bateria
+  if ((millis() - tUlL) > 100) {
+    battLevel += (analogRead(battPin) - battLevel) >> 4;
+
+    //Desactivacion a los 3.2 y reactivacion a los 3.6
+    if ((battLevel <= (battEmpty + 25)) && battSafe) {
+      battSafe = false;
+    }
+    else if ((battLevel >= battReset) && !battSafe) {
+      battSafe = true;
+    }
+
+    tUlL = millis();
+    //Serial.println(battLevel);
+  }
+  //Enviar estado de la bateria
+  if (millis() - tUlS > dT) {
+    if (battLevel <= 900) { //Enviar porcentaje
+
+      int porcentaje = constrain((battLevel - battEmpty) * 100 / (battFull - battEmpty), 0, 100);
+      Serial.print("Bateria = ");
+      Serial.println(porcentaje);
+    }
+    else Serial.println("Estado = C");//Cargando
+    tUlS = millis();
+  }
+}
+
+//Funcion que envia la calibracion actual
+void printCalib() {
+  
+}
+  
 void setup()
 {
   //Inicio del puerto Serial
   Serial.begin(9600);
   //pinMode(13, OUTPUT);
+  //Cargar calibracion
+  EEPROM.get(0,calibracion);
+  sima.setCalib(calibracion);
   //Inicialización de servos
   for (int i = 0; i < 8; i++)
   {
@@ -152,6 +190,23 @@ void loop() {
     {
       mot_inicio = comando[k][0];
       mot_final = comando[k][1];
+      if (mot_inicio == 9 && mot_final == 9) { //**Accion de calibracion**
+        for (int i = 0; i < 8; i++) {
+          calibracion[i] = (int) comando[0][i] - 30; //Cambiar rango de valores para pemirtir negativos
+          //Serial.println(calibracion[i]);
+        }
+        sima.setCalib(calibracion);
+        EEPROM.put(0,calibracion);
+        Serial.println("SET");
+        correcto = false; //No ejecutar movimiento
+      } 
+      else if (mot_inicio == 10 && mot_final == 10) { //**Enviar calibracion actual**
+        
+        for (int i = 0; i < 8; i++) {
+          Serial.write(byte(calibracion[i]+30)); //Cambiar rango de valores para evitar negativos
+        }
+        correcto = false; //No ejecutar movimiento
+      }
     }
     else correcto = false;
     //Ejecutar los comandos
@@ -162,40 +217,14 @@ void loop() {
       if (battSafe) {
         Serial.println("Recibido");
         sima.animation(comando, articulacion, ang, k,  estadoMotores[mot_inicio], estadoMotores[mot_final] );
+        Serial.println("k");
       }
-      Serial.println("k");
+      else {
+        Serial.println("BattLow");
+      }
     }
   }
 
 }
 
-void battMonitor() {
-  //Revisar bateria
-  if ((millis() - tUlL) > 100) {
-    battLevel += (analogRead(battPin) - battLevel) >> 4;
-
-    //Desactivacion a los 3.2 y reactivacion a los 3.6
-    if ((battLevel <= (battEmpty + 25)) && battSafe) {
-      battSafe = false;
-    }
-    else if ((battLevel >= battReset) && !battSafe) {
-      battSafe = true;
-    }
-
-    tUlL = millis();
-    //Serial.println(battLevel);
-  }
-  //Enviar estado de la bateria
-  if (millis() - tUlS > dT) {
-    if (battLevel <= 900) { //Enviar porcentaje
-
-      int porcentaje = constrain((battLevel - battEmpty) * 100 / (battFull - battEmpty), 0, 100);
-      Serial.print("Bateria = ");
-      Serial.println(porcentaje);
-    }
-    else Serial.println("Estado = C");//Cargando
-    tUlS = millis();
-  }
-
-}
 
