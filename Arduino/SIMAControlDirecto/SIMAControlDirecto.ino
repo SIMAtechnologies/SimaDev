@@ -190,7 +190,9 @@ void loop() {
     {
       mot_inicio = comando[k][0];
       mot_final = comando[k][1];
-      if (mot_inicio == 9 && mot_final == 9) { //**Accion de calibracion**
+      //
+      //**Accion de calibracion**
+      if (mot_inicio == 9 && mot_final == 9) { 
         for (int i = 0; i < 8; i++) {
           calibracion[i] = (int) comando[0][i] - 30; //Cambiar rango de valores para pemirtir negativos
           //Serial.println(calibracion[i]);
@@ -200,8 +202,10 @@ void loop() {
         Serial.println("SET");
         correcto = false; //No ejecutar movimiento
       } 
-      else if (mot_inicio == 10 && mot_final == 10) { //**Enviar calibracion actual**
-        
+      //
+      //**Enviar calibracion actual**
+      else if (mot_inicio == 10 && mot_final == 10) { 
+          Serial.write(byte(252));
         for (int i = 0; i < 8; i++) {
           Serial.write(byte(calibracion[i]+30)); //Cambiar rango de valores para evitar negativos
         }
